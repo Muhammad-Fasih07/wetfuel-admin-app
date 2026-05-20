@@ -42,7 +42,7 @@ export default function ConfirmDialog({
         {title}
       </DialogTitle>
       <DialogContent>
-        <Typography variant="body2" sx={{ color: "#887b6a" }}>
+        <Typography variant="body2" sx={{ color: "#64748b" }}>
           {message}
         </Typography>
       </DialogContent>

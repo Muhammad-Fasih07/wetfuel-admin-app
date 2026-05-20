@@ -66,15 +66,15 @@ export default function DriverDetailPage() {
                 {getInitials(driver.name)}
               </Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>{driver.name}</Typography>
-              <Typography variant="body2" sx={{ color: "#887b6a", mb: 1.5 }}>{driver.email}</Typography>
+              <Typography variant="body2" sx={{ color: "#64748b", mb: 1.5 }}>{driver.email}</Typography>
               <StatusChip status={driver.status} size="medium" />
             </Box>
             <Divider />
             <Box sx={{ pt: 2 }}>
               {fields.map((f) => (
                 <Box key={f.label} sx={{ display: "flex", justifyContent: "space-between", py: 0.75 }}>
-                  <Typography sx={{ fontSize: "0.8rem", color: "#887b6a", fontWeight: 500 }}>{f.label}</Typography>
-                  <Typography sx={{ fontSize: "0.8rem", color: f.warn ? "#f59e0b" : "#2b2b2b", fontWeight: f.warn ? 600 : 400, maxWidth: "55%", textAlign: "right" }}>
+                  <Typography sx={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 500 }}>{f.label}</Typography>
+                  <Typography sx={{ fontSize: "0.8rem", color: f.warn ? "#f59e0b" : "#f1f5f9", fontWeight: f.warn ? 600 : 400, maxWidth: "55%", textAlign: "right" }}>
                     {f.value || "—"}
                   </Typography>
                 </Box>
@@ -98,7 +98,7 @@ export default function DriverDetailPage() {
                   driver.certifications.map((cert) => (
                     <Box key={cert.id} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 1.5, borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)", mb: 1.5 }}>
                       <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{cert.name}</Typography>
-                      <Typography sx={{ fontSize: "0.8rem", color: isExpired(cert.expiryDate) ? "#ef4444" : isExpiringSoon(cert.expiryDate) ? "#f59e0b" : "#887b6a" }}>
+                      <Typography sx={{ fontSize: "0.8rem", color: isExpired(cert.expiryDate) ? "#ef4444" : isExpiringSoon(cert.expiryDate) ? "#f59e0b" : "#64748b" }}>
                         Expires {formatDate(cert.expiryDate)}
                         {isExpired(cert.expiryDate) && " — EXPIRED"}
                       </Typography>

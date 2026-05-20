@@ -18,10 +18,10 @@ const mockInvoices = [
 ];
 
 const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
-  Paid: { bg: "#dcfce7", color: "#15803d" },
-  Outstanding: { bg: "#dbeafe", color: "#1d4ed8" },
-  Draft: { bg: "#f3f4f6", color: "#6b7280" },
-  Overdue: { bg: "#fee2e2", color: "#dc2626" },
+  Paid: { bg: "rgba(34,197,94,0.15)", color: "#4ade80" },
+  Outstanding: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
+  Draft: { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" },
+  Overdue: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
 };
 
 const STATUSES = ["All", "Draft", "Outstanding", "Paid", "Overdue"];
@@ -80,7 +80,7 @@ export default function InvoicesPage() {
           </TableHead>
           <TableBody>
             {filtered.map((inv) => {
-              const sc = STATUS_COLORS[inv.status] || { bg: "#f3f4f6", color: "#6b7280" };
+              const sc = STATUS_COLORS[inv.status] || { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" };
               return (
                 <TableRow key={inv.id} hover>
                   <TableCell>
@@ -88,7 +88,7 @@ export default function InvoicesPage() {
                   </TableCell>
                   <TableCell><Typography sx={{ fontSize: "0.875rem", fontWeight: 500 }}>{inv.customerName}</Typography></TableCell>
                   <TableCell>
-                    <Typography sx={{ fontSize: "0.875rem", fontWeight: 700, color: inv.status === "Overdue" ? "#ef4444" : "#2b2b2b" }}>
+                    <Typography sx={{ fontSize: "0.875rem", fontWeight: 700, color: inv.status === "Overdue" ? "#ef4444" : "#f1f5f9" }}>
                       {formatCurrency(inv.amount)}
                     </Typography>
                   </TableCell>
@@ -97,7 +97,7 @@ export default function InvoicesPage() {
                   </TableCell>
                   <TableCell><Typography sx={{ fontSize: "0.8rem" }}>{formatDate(inv.date)}</Typography></TableCell>
                   <TableCell>
-                    <Typography sx={{ fontSize: "0.8rem", color: inv.status === "Overdue" ? "#ef4444" : "#2b2b2b", fontWeight: inv.status === "Overdue" ? 600 : 400 }}>
+                    <Typography sx={{ fontSize: "0.8rem", color: inv.status === "Overdue" ? "#ef4444" : "#f1f5f9", fontWeight: inv.status === "Overdue" ? 600 : 400 }}>
                       {formatDate(inv.dueDate)}
                     </Typography>
                   </TableCell>

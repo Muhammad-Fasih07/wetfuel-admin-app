@@ -41,9 +41,9 @@ export default function SettingsPage() {
           sx={{
             width: 220,
             flexShrink: 0,
-            background: "white",
+            background: "#1c1c1e",
             borderRadius: "14px",
-            border: "1px solid rgba(0,0,0,0.06)",
+            border: "1px solid rgba(255,255,255,0.07)",
             p: 1,
             "@media (max-width: 768px)": { width: "100%" },
           }}
@@ -61,12 +61,12 @@ export default function SettingsPage() {
                 borderRadius: "10px",
                 cursor: "pointer",
                 transition: "all 150ms",
-                color: activeTab === i ? "white" : "#6b7280",
+                color: activeTab === i ? "#ffffff" : "#94a3b8",
                 backgroundColor: activeTab === i ? "#ce1c1a" : "transparent",
                 mb: 0.25,
                 "&:hover": {
-                  backgroundColor: activeTab === i ? "#bf2524" : "#f9fafb",
-                  color: activeTab === i ? "white" : "#2b2b2b",
+                  backgroundColor: activeTab === i ? "#bf2524" : "rgba(255,255,255,0.06)",
+                  color: activeTab === i ? "#ffffff" : "#f1f5f9",
                 },
               }}
             >

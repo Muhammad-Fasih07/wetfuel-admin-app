@@ -60,7 +60,7 @@ export default function LoginPage() {
         alignItems: "center",
         justifyContent: "center",
         background:
-          "radial-gradient(ellipse at 60% 20%, #6b1212 0%, #2a0808 30%, #1a0505 60%, #0f0303 100%)",
+          "radial-gradient(ellipse at 60% 20%, #3d0a0a 0%, #1a0404 40%, #0d0d0d 70%, #080808 100%)",
         p: 2,
       }}
     >
@@ -69,16 +69,17 @@ export default function LoginPage() {
         sx={{
           width: "100%",
           maxWidth: 440,
-          background: "white",
+          background: "#1a1a1c",
           borderRadius: "20px",
           overflow: "hidden",
-          boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(206,28,26,0.15)",
         }}
       >
-        {/* Top gradient accent */}
+        {/* Top red accent bar */}
         <Box
           sx={{
-            height: 6,
+            height: 4,
             background: "linear-gradient(90deg, #ce1c1a, #f0797a, #ce1c1a)",
           }}
         />
@@ -92,11 +93,12 @@ export default function LoginPage() {
                 height: 72,
                 borderRadius: "18px",
                 backgroundColor: "#111",
+                border: "1px solid rgba(255,255,255,0.1)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mb: 1.25,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
                 overflow: "hidden",
                 flexShrink: 0,
               }}
@@ -110,7 +112,7 @@ export default function LoginPage() {
                 style={{ objectFit: "contain" }}
               />
             </Box>
-            <Typography sx={{ fontSize: "0.8rem", color: "#888", fontWeight: 500 }}>
+            <Typography sx={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 500 }}>
               WetFuel Admin Panel
             </Typography>
           </Box>
@@ -125,12 +127,12 @@ export default function LoginPage() {
                 px: 2,
                 py: 0.5,
                 borderRadius: "20px",
-                border: "1.5px solid #ce1c1a",
-                backgroundColor: "rgba(206,28,26,0.04)",
+                border: "1.5px solid rgba(206,28,26,0.6)",
+                backgroundColor: "rgba(206,28,26,0.1)",
               }}
             >
               <Box sx={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#ce1c1a" }} />
-              <Typography sx={{ fontSize: "0.7rem", fontWeight: 700, color: "#ce1c1a", letterSpacing: "0.1em" }}>
+              <Typography sx={{ fontSize: "0.7rem", fontWeight: 700, color: "#f87171", letterSpacing: "0.1em" }}>
                 SIGN IN
               </Typography>
             </Box>
@@ -139,13 +141,11 @@ export default function LoginPage() {
           {/* Heading */}
           <Typography
             variant="h4"
-            sx={{ fontWeight: 800, color: "#111", textAlign: "center", mb: 0.75, lineHeight: 1.2 }}
+            sx={{ fontWeight: 800, color: "#f1f5f9", textAlign: "center", mb: 0.75, lineHeight: 1.2 }}
           >
             Welcome back
           </Typography>
-          <Typography
-            sx={{ fontSize: "0.875rem", color: "#888", textAlign: "center", mb: 3 }}
-          >
+          <Typography sx={{ fontSize: "0.875rem", color: "#64748b", textAlign: "center", mb: 3 }}>
             Sign in to your admin account to continue.
           </Typography>
 
@@ -156,11 +156,11 @@ export default function LoginPage() {
                 mb: 2,
                 p: 1.5,
                 borderRadius: "10px",
-                backgroundColor: "#fff5f5",
-                border: "1px solid #fecaca",
+                backgroundColor: "rgba(206,28,26,0.12)",
+                border: "1px solid rgba(206,28,26,0.3)",
               }}
             >
-              <Typography sx={{ fontSize: "0.8rem", color: "#dc2626", textAlign: "center" }}>
+              <Typography sx={{ fontSize: "0.8rem", color: "#f87171", textAlign: "center" }}>
                 {error} — try <strong>admin@wetfuel.com</strong> / <strong>admin123</strong>
               </Typography>
             </Box>
@@ -197,7 +197,7 @@ export default function LoginPage() {
                     <IconButton
                       size="small"
                       onClick={() => setShowPassword(!showPassword)}
-                      sx={{ color: "#9ca3af" }}
+                      sx={{ color: "#64748b", "&:hover": { color: "#94a3b8" } }}
                     >
                       {showPassword ? (
                         <VisibilityOffIcon fontSize="small" />
@@ -217,20 +217,23 @@ export default function LoginPage() {
                 control={
                   <Checkbox
                     size="small"
-                    sx={{ color: "#d1d5db", "&.Mui-checked": { color: "#ce1c1a" } }}
+                    sx={{
+                      color: "rgba(255,255,255,0.15)",
+                      "&.Mui-checked": { color: "#ce1c1a" },
+                    }}
                   />
                 }
                 label={
-                  <Typography sx={{ fontSize: "0.8rem", color: "#555" }}>Remember me</Typography>
+                  <Typography sx={{ fontSize: "0.8rem", color: "#94a3b8" }}>Remember me</Typography>
                 }
               />
               <Link href="/forgot-password" style={{ textDecoration: "none" }}>
                 <Typography
                   sx={{
                     fontSize: "0.8rem",
-                    color: "#ce1c1a",
+                    color: "#f87171",
                     fontWeight: 600,
-                    "&:hover": { color: "#bf2524" },
+                    "&:hover": { color: "#fca5a5" },
                   }}
                 >
                   Forgot password?
@@ -249,12 +252,12 @@ export default function LoginPage() {
                 fontWeight: 700,
                 borderRadius: "10px",
                 background: "linear-gradient(135deg, #cd171a, #ce1c1a, #bf2524)",
-                boxShadow: "0 4px 14px rgba(206,28,26,0.35)",
+                boxShadow: "0 4px 20px rgba(206,28,26,0.4)",
                 "&:hover": {
                   background: "linear-gradient(135deg, #bf2524, #a61e1c, #8b1816)",
-                  boxShadow: "0 6px 20px rgba(206,28,26,0.45)",
+                  boxShadow: "0 6px 24px rgba(206,28,26,0.5)",
                 },
-                "&:disabled": { opacity: 0.65 },
+                "&:disabled": { opacity: 0.5 },
               }}
             >
               {loading ? "Signing in…" : "Sign in"}
@@ -267,14 +270,14 @@ export default function LoginPage() {
           sx={{
             px: 4,
             py: 2,
-            backgroundColor: "#fafafa",
-            borderTop: "1px solid #f0f0f0",
+            backgroundColor: "#141416",
+            borderTop: "1px solid rgba(255,255,255,0.06)",
             textAlign: "center",
           }}
         >
-          <Typography sx={{ fontSize: "0.75rem", color: "#bbb" }}>
+          <Typography sx={{ fontSize: "0.75rem", color: "#475569" }}>
             Having trouble?{" "}
-            <Box component="span" sx={{ color: "#888", fontWeight: 500 }}>
+            <Box component="span" sx={{ color: "#64748b", fontWeight: 500 }}>
               Contact your WetFuel administrator.
             </Box>
           </Typography>
@@ -287,16 +290,19 @@ export default function LoginPage() {
 const inputSx = {
   "& .MuiOutlinedInput-root": {
     borderRadius: "8px",
-    backgroundColor: "#fafafa",
+    backgroundColor: "#252528",
     fontSize: "0.875rem",
-    "& fieldset": { borderColor: "#e5e7eb" },
-    "&:hover fieldset": { borderColor: "#d1d5db" },
+    color: "#f1f5f9",
+    "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
+    "&:hover fieldset": { borderColor: "rgba(255,255,255,0.22)" },
     "&.Mui-focused fieldset": { borderColor: "#ce1c1a", borderWidth: 1.5 },
   },
   "& .MuiInputLabel-root": {
     fontSize: "0.875rem",
-    color: "#9ca3af",
+    color: "#64748b",
     "&.Mui-focused": { color: "#ce1c1a" },
   },
-  "& .MuiFormHelperText-root": { color: "#ef4444" },
+  "& .MuiFormHelperText-root": { color: "#f87171" },
+  "& input": { color: "#f1f5f9" },
+  "& input::placeholder": { color: "#475569", opacity: 1 },
 };

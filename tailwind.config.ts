@@ -13,10 +13,10 @@ const config: Config = {
           red: "#ce1c1a",
           redHover: "#bf2524",
           redActive: "#cd171a",
-          black: "#2b2b2b",
+          black: "#f1f5f9",
           blackDeep: "#17140b",
           charcoal: "#282a2c",
-          taupe: "#887b6a",
+          taupe: "#64748b",
           lightGray: "#f5f5f5",
           softPink: "#f0797a",
           rose: "#ca5f68",
@@ -40,7 +40,7 @@ const config: Config = {
       backgroundImage: {
         "gradient-primary": "linear-gradient(135deg, #cd171a, #ce1c1a, #bf2524)",
         "gradient-primary-hover": "linear-gradient(135deg, #bf2524, #a61e1c, #8b1816)",
-        "gradient-card": "linear-gradient(145deg, #ffffff, #fbfaf9, #f7f6f4)",
+        "gradient-card": "linear-gradient(145deg, #1c1c1e, #222224, #252528)",
         "gradient-auth": "radial-gradient(ellipse at center, #232324 0%, #1c1c1d 50%, #1a1a1b 100%)",
       },
       animation: {

@@ -15,15 +15,15 @@ export default function IntegrationsPanel() {
       {/* QuickBooks */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>QuickBooks Integration</Typography>
-        <Typography variant="body2" sx={{ color: "#887b6a", mb: 2 }}>Connect WetFuel to QuickBooks Online to automatically sync invoices.</Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, p: 2.5, borderRadius: "12px", border: "1px solid rgba(0,0,0,0.08)", backgroundColor: "#f9fafb" }}>
+        <Typography variant="body2" sx={{ color: "#64748b", mb: 2 }}>Connect WetFuel to QuickBooks Online to automatically sync invoices.</Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, p: 2.5, borderRadius: "12px", border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "#252528" }}>
           <Box sx={{ flex: 1 }}>
             <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>QuickBooks Online</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
               {qbConnected ? (
-                <Chip icon={<CheckCircleIcon sx={{ fontSize: "14px !important" }} />} label="Connected" size="small" sx={{ backgroundColor: "#dcfce7", color: "#15803d", fontWeight: 600 }} />
+                <Chip icon={<CheckCircleIcon sx={{ fontSize: "14px !important" }} />} label="Connected" size="small" sx={{ backgroundColor: "rgba(34,197,94,0.15)", color: "#4ade80", fontWeight: 600 }} />
               ) : (
-                <Chip label="Not Connected" size="small" sx={{ backgroundColor: "#fee2e2", color: "#dc2626" }} />
+                <Chip label="Not Connected" size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171" }} />
               )}
             </Box>
           </Box>
@@ -43,7 +43,7 @@ export default function IntegrationsPanel() {
       {/* OPIS Daily Rate */}
       <Box>
         <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>OPIS Fuel Pricing</Typography>
-        <Typography variant="body2" sx={{ color: "#887b6a", mb: 2 }}>OPIS daily rack rates — approve or override for today's deliveries.</Typography>
+        <Typography variant="body2" sx={{ color: "#64748b", mb: 2 }}>OPIS daily rack rates — approve or override for today's deliveries.</Typography>
 
         <Alert severity="info" sx={{ mb: 2.5, borderRadius: "10px", fontSize: "0.8rem" }}>
           Last synced: Nov 8, 2024 at 6:00 AM CST
@@ -55,10 +55,10 @@ export default function IntegrationsPanel() {
             { key: "premium", label: "Premium (OPIS)", color: "#8b5cf6" },
             { key: "diesel", label: "Diesel (OPIS)", color: "#f59e0b" },
           ].map((fuel) => (
-            <Box key={fuel.key} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(0,0,0,0.07)", display: "flex", alignItems: "center", gap: 2 }}>
+            <Box key={fuel.key} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(255,255,255,0.07)", display: "flex", alignItems: "center", gap: 2 }}>
               <Box sx={{ flex: 1 }}>
                 <Typography sx={{ fontSize: "0.875rem", fontWeight: 600, color: fuel.color }}>{fuel.label}</Typography>
-                <Typography sx={{ fontSize: "0.8rem", color: "#887b6a" }}>
+                <Typography sx={{ fontSize: "0.8rem", color: "#64748b" }}>
                   OPIS Rate: ${opisRate[fuel.key as keyof typeof opisRate]}/gal
                 </Typography>
               </Box>
@@ -68,7 +68,7 @@ export default function IntegrationsPanel() {
                 value={override[fuel.key as keyof typeof override]}
                 onChange={(e) => setOverride((s) => ({ ...s, [fuel.key]: e.target.value }))}
                 placeholder={opisRate[fuel.key as keyof typeof opisRate]}
-                InputProps={{ startAdornment: <span style={{ marginRight: 4, color: "#887b6a" }}>$</span> }}
+                InputProps={{ startAdornment: <span style={{ marginRight: 4, color: "#64748b" }}>$</span> }}
                 sx={{ width: 160 }}
               />
             </Box>

@@ -18,10 +18,10 @@ import { mockChartData, mockDriverReports, mockCustomerReports } from "./_data";
 import { formatCurrency, formatNumber } from "@/lib/utils/formatters";
 
 const STATS = [
-  { title: "Total Gallons Delivered", value: "59,100 gal", icon: <LocalGasStationIcon sx={{ fontSize: 22 }} />, iconBg: "#dbeafe", iconColor: "#3b82f6", trend: 14, trendLabel: "vs last month" },
-  { title: "Total Revenue", value: formatCurrency(281172), icon: <AttachMoneyIcon sx={{ fontSize: 22 }} />, iconBg: "#dcfce7", iconColor: "#22c55e", trend: 18, trendLabel: "vs last month" },
-  { title: "Total Jobs", value: "160", icon: <AssignmentIcon sx={{ fontSize: 22 }} />, iconBg: "#fef3c7", iconColor: "#f59e0b", trend: 9, trendLabel: "vs last month" },
-  { title: "Active Drivers", value: "3", icon: <PeopleIcon sx={{ fontSize: 22 }} />, iconBg: "#ede9fe", iconColor: "#8b5cf6" },
+  { title: "Total Gallons Delivered", value: "59,100 gal", icon: <LocalGasStationIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(59,130,246,0.2)", iconColor: "#60a5fa", trend: 14, trendLabel: "vs last month" },
+  { title: "Total Revenue", value: formatCurrency(281172), icon: <AttachMoneyIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(34,197,94,0.2)", iconColor: "#4ade80", trend: 18, trendLabel: "vs last month" },
+  { title: "Total Jobs", value: "160", icon: <AssignmentIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(245,158,11,0.2)", iconColor: "#fbbf24", trend: 9, trendLabel: "vs last month" },
+  { title: "Active Drivers", value: "3", icon: <PeopleIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(139,92,246,0.2)", iconColor: "#a78bfa" },
 ];
 
 export default function ReportingPage() {
@@ -48,9 +48,9 @@ export default function ReportingPage() {
           <SectionCard title="Gallons Delivered" subtitle="Last 6 weeks">
             <ResponsiveContainer width="100%" height={260}>
               <LineChart data={mockChartData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#887b6a" }} />
-                <YAxis tick={{ fontSize: 11, fill: "#887b6a" }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#64748b" }} />
+                <YAxis tick={{ fontSize: 11, fill: "#64748b" }} />
                 <Tooltip
                   contentStyle={{ borderRadius: 10, border: "1px solid #e5e7eb", fontSize: 12 }}
                   formatter={(v: any) => [`${Number(v).toLocaleString()} gal`, "Gallons"]}
@@ -66,9 +66,9 @@ export default function ReportingPage() {
           <SectionCard title="Revenue" subtitle="Last 6 weeks">
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={mockChartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#887b6a" }} />
-                <YAxis tick={{ fontSize: 11, fill: "#887b6a" }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#64748b" }} />
+                <YAxis tick={{ fontSize: 11, fill: "#64748b" }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
                 <Tooltip
                   contentStyle={{ borderRadius: 10, border: "1px solid #e5e7eb", fontSize: 12 }}
                   formatter={(v: any) => [formatCurrency(v), "Revenue"]}

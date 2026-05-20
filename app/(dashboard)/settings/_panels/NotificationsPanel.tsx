@@ -40,13 +40,13 @@ export default function NotificationsPanel() {
       {NOTIFICATION_GROUPS.map((group, gi) => (
         <Box key={group.group}>
           {gi > 0 && <Divider sx={{ my: 3 }} />}
-          <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, color: "#2b2b2b" }}>{group.group}</Typography>
+          <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2, color: "#f1f5f9" }}>{group.group}</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {group.items.map((item) => (
               <Box key={item.id} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <Box>
                   <Typography sx={{ fontSize: "0.875rem", fontWeight: 500 }}>{item.label}</Typography>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{item.description}</Typography>
+                  <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{item.description}</Typography>
                 </Box>
                 <Switch
                   checked={settings[item.id]}

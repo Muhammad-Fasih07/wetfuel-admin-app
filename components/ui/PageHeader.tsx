@@ -35,7 +35,7 @@ export default function PageHeader({
       <Box>
         {breadcrumbs && breadcrumbs.length > 0 && (
           <Breadcrumbs
-            separator={<NavigateNextIcon sx={{ fontSize: 14 }} />}
+            separator={<NavigateNextIcon sx={{ fontSize: 14, color: "#475569" }} />}
             sx={{ mb: 0.5 }}
           >
             {breadcrumbs.map((crumb, i) =>
@@ -47,7 +47,7 @@ export default function PageHeader({
                   underline="hover"
                   sx={{
                     fontSize: "0.75rem",
-                    color: "#887b6a",
+                    color: "#64748b",
                     fontWeight: 500,
                   }}
                 >
@@ -56,7 +56,7 @@ export default function PageHeader({
               ) : (
                 <Typography
                   key={i}
-                  sx={{ fontSize: "0.75rem", color: "#2b2b2b", fontWeight: 500 }}
+                  sx={{ fontSize: "0.75rem", color: "#94a3b8", fontWeight: 500 }}
                 >
                   {crumb.label}
                 </Typography>
@@ -64,17 +64,11 @@ export default function PageHeader({
             )}
           </Breadcrumbs>
         )}
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: 700, color: "#2b2b2b", lineHeight: 1.3 }}
-        >
+        <Typography variant="h5" sx={{ fontWeight: 700, color: "#f1f5f9", lineHeight: 1.3 }}>
           {title}
         </Typography>
         {subtitle && (
-          <Typography
-            variant="body2"
-            sx={{ color: "#887b6a", mt: 0.25, fontWeight: 400 }}
-          >
+          <Typography variant="body2" sx={{ color: "#64748b", mt: 0.25, fontWeight: 400 }}>
             {subtitle}
           </Typography>
         )}

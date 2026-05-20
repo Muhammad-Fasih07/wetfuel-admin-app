@@ -14,8 +14,8 @@
   }
 
   body {
-    color: var(--color-brand-black);
-    background-color: var(--color-brand-light-gray);
+    color: #f1f5f9;
+    background-color: #111111;
   }
 
   ::-webkit-scrollbar {
@@ -26,11 +26,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d1d5db;
+    background: #333336;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
+    background: #4a4a4e;
   }
 }
 
@@ -50,22 +50,22 @@
     background-clip: text;
   }
 
-  /* Glass card */
+  /* Glass card — dark */
   .glass-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(28, 28, 30, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-lg);
   }
 
-  /* Shimmer loading effect */
+  /* Shimmer loading — dark */
   .shimmer {
     background: linear-gradient(
       90deg,
-      #f0f0f0 25%,
-      #e0e0e0 50%,
-      #f0f0f0 75%
+      #1e1e20 25%,
+      #2a2a2e 50%,
+      #1e1e20 75%
     );
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
@@ -121,11 +121,11 @@
     transform: translateY(0);
   }
 
-  /* Dashboard card */
+  /* Dashboard card — dark */
   .dashboard-card {
-    background: white;
+    background: #1c1c1e;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--transition-base);
   }
@@ -141,7 +141,7 @@
     gap: 12px;
     padding: 10px 16px;
     border-radius: var(--radius-md);
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all var(--transition-fast);
     text-decoration: none;
@@ -157,43 +157,42 @@
 
   .nav-item.active {
     color: white;
-    background: rgba(206, 28, 26, 0.15);
+    background: rgba(180, 20, 20, 0.38);
     border-left: 3px solid var(--color-brand-red);
     padding-left: 13px;
   }
 
-  /* Kanban column */
+  /* Kanban column — dark */
   .kanban-col {
-    background: #f8f9fa;
+    background: #1a1a1c;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
     min-height: 500px;
   }
 
-  /* Status chip variants */
+  /* Status chip variants — dark-friendly */
   .chip-active {
-    background: #dcfce7;
-    color: #15803d;
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
   }
 
   .chip-deactivated {
-    background: #fee2e2;
-    color: #dc2626;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
   }
 
   .chip-pending {
-    background: #fef3c7;
-    color: #d97706;
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
   }
 
   .chip-completed {
-    background: #dbeafe;
-    color: #1d4ed8;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
   }
 }
 
 @layer utilities {
-  /* Animation utilities */
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }

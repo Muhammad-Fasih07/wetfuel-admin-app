@@ -28,9 +28,9 @@ const changeRequests = [
 ];
 
 const SEVERITY_COLORS: Record<string, { bg: string; color: string }> = {
-  high: { bg: "#fee2e2", color: "#dc2626" },
-  medium: { bg: "#fef3c7", color: "#d97706" },
-  low: { bg: "#dbeafe", color: "#1d4ed8" },
+  high: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
+  medium: { bg: "rgba(245,158,11,0.15)", color: "#fbbf24" },
+  low: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
 };
 
 export default function ActivityPage() {
@@ -45,7 +45,7 @@ export default function ActivityPage() {
       {/* Flagged Activities */}
       <Box sx={{ mb: 3 }}>
         <SectionCard title="Flagged Fueling Activities" subtitle="Anomalies detected by the system" action={
-          <Chip label={`${flaggedActivities.length} flags`} size="small" sx={{ backgroundColor: "#fee2e2", color: "#dc2626", fontWeight: 600 }} />
+          <Chip label={`${flaggedActivities.length} flags`} size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171", fontWeight: 600 }} />
         } noPadding>
           <Table>
             <TableHead>
@@ -73,10 +73,10 @@ export default function ActivityPage() {
                     <TableCell>{flag.customer}</TableCell>
                     <TableCell>{flag.driver}</TableCell>
                     <TableCell sx={{ maxWidth: 240 }}>
-                      <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{flag.details}</Typography>
+                      <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{flag.details}</Typography>
                     </TableCell>
                     <TableCell><Chip label={flag.severity} size="small" sx={{ backgroundColor: sc.bg, color: sc.color, fontWeight: 600, textTransform: "capitalize" }} /></TableCell>
-                    <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{formatDateTime(flag.time)}</Typography></TableCell>
+                    <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{formatDateTime(flag.time)}</Typography></TableCell>
                     <TableCell align="right">
                       <Button size="small" variant="outlined" sx={{ fontSize: "0.7rem" }}>Review</Button>
                     </TableCell>
@@ -97,11 +97,11 @@ export default function ActivityPage() {
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
             {registrationRequests.map((req) => (
-              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(255,255,255,0.07)" }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
                   <Box>
                     <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{req.name}</Typography>
-                    <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{req.email}</Typography>
+                    <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{req.email}</Typography>
                   </Box>
                   <Typography sx={{ fontSize: "0.7rem", color: "#9ca3af" }}>{formatDateTime(req.submittedAt)}</Typography>
                 </Box>
@@ -122,14 +122,14 @@ export default function ActivityPage() {
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
             {changeRequests.map((req) => (
-              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(255,255,255,0.07)" }}>
                 <Box sx={{ mb: 1 }}>
                   <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
                     <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{req.customer}</Typography>
-                    <Chip label={req.type} size="small" sx={{ fontSize: "0.65rem", backgroundColor: "#dbeafe", color: "#1d4ed8" }} />
+                    <Chip label={req.type} size="small" sx={{ fontSize: "0.65rem", backgroundColor: "rgba(59,130,246,0.15)", color: "#60a5fa" }} />
                   </Box>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>Current: {req.current}</Typography>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#2b2b2b" }}>Requested: {req.requested}</Typography>
+                  <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>Current: {req.current}</Typography>
+                  <Typography sx={{ fontSize: "0.75rem", color: "#f1f5f9" }}>Requested: {req.requested}</Typography>
                 </Box>
                 <Box sx={{ display: "flex", gap: 1 }}>
                   <Button size="small" variant="outlined" startIcon={<CheckIcon />} sx={{ fontSize: "0.7rem", borderColor: "#22c55e", color: "#22c55e" }}>Approve</Button>

@@ -20,10 +20,10 @@ export default function SectionCard({
   return (
     <Box
       sx={{
-        background: "white",
+        background: "#1c1c1e",
         borderRadius: "14px",
-        border: "1px solid rgba(0,0,0,0.06)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
         overflow: "hidden",
       }}
     >
@@ -35,20 +35,17 @@ export default function SectionCard({
             justifyContent: "space-between",
             px: 3,
             py: 2,
-            borderBottom: "1px solid rgba(0,0,0,0.06)",
+            borderBottom: "1px solid rgba(255,255,255,0.07)",
           }}
         >
           <Box>
             {title && (
-              <Typography
-                variant="subtitle1"
-                sx={{ fontWeight: 600, color: "#2b2b2b" }}
-              >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#f1f5f9" }}>
                 {title}
               </Typography>
             )}
             {subtitle && (
-              <Typography variant="caption" sx={{ color: "#887b6a" }}>
+              <Typography variant="caption" sx={{ color: "#64748b" }}>
                 {subtitle}
               </Typography>
             )}

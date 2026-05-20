@@ -13,16 +13,16 @@ export default function DangerPanel() {
         Actions in this section are irreversible. Proceed with extreme caution.
       </Alert>
 
-      <Box sx={{ p: 3, borderRadius: "12px", border: "1px solid #fee2e2", backgroundColor: "#fff5f5" }}>
+      <Box sx={{ p: 3, borderRadius: "12px", border: "1px solid rgba(239,68,68,0.3)", backgroundColor: "rgba(206,28,26,0.12)" }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 700, color: "#dc2626", mb: 0.5 }}>
           Deactivate Account
         </Typography>
-        <Typography variant="body2" sx={{ color: "#887b6a", mb: 2 }}>
+        <Typography variant="body2" sx={{ color: "#64748b", mb: 2 }}>
           Permanently deactivate this admin account. You will lose access immediately and all data will be retained for audit purposes.
         </Typography>
         <Button
           variant="outlined"
-          sx={{ borderColor: "#ef4444", color: "#ef4444", "&:hover": { backgroundColor: "#fee2e2" } }}
+          sx={{ borderColor: "#ef4444", color: "#ef4444", "&:hover": { backgroundColor: "rgba(239,68,68,0.15)" } }}
           onClick={() => setOpen(true)}
         >
           Deactivate Account

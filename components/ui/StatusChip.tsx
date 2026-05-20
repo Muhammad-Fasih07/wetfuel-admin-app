@@ -15,21 +15,18 @@ type Status =
   | "Assigned"
   | "Finalized";
 
-const STATUS_CONFIG: Record<
-  Status,
-  { bg: string; color: string; label?: string }
-> = {
-  Active: { bg: "#dcfce7", color: "#15803d" },
-  Deactivated: { bg: "#fee2e2", color: "#dc2626" },
-  Pending: { bg: "#fef3c7", color: "#d97706" },
-  Completed: { bg: "#dbeafe", color: "#1d4ed8" },
-  "On Leave": { bg: "#fef3c7", color: "#d97706" },
-  Maintenance: { bg: "#fef3c7", color: "#d97706" },
-  Decommissioned: { bg: "#fee2e2", color: "#dc2626" },
-  New: { bg: "#ede9fe", color: "#7c3aed" },
-  Ready: { bg: "#dbeafe", color: "#1d4ed8" },
-  Assigned: { bg: "#fef3c7", color: "#d97706" },
-  Finalized: { bg: "#dcfce7", color: "#15803d" },
+const STATUS_CONFIG: Record<Status, { bg: string; color: string }> = {
+  Active: { bg: "rgba(34,197,94,0.15)", color: "#4ade80" },
+  Deactivated: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
+  Pending: { bg: "rgba(245,158,11,0.15)", color: "#fbbf24" },
+  Completed: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
+  "On Leave": { bg: "rgba(245,158,11,0.15)", color: "#fbbf24" },
+  Maintenance: { bg: "rgba(245,158,11,0.15)", color: "#fbbf24" },
+  Decommissioned: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
+  New: { bg: "rgba(139,92,246,0.15)", color: "#a78bfa" },
+  Ready: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
+  Assigned: { bg: "rgba(245,158,11,0.15)", color: "#fbbf24" },
+  Finalized: { bg: "rgba(34,197,94,0.15)", color: "#4ade80" },
 };
 
 interface StatusChipProps {
@@ -38,7 +35,7 @@ interface StatusChipProps {
 }
 
 export default function StatusChip({ status, size = "small" }: StatusChipProps) {
-  const config = STATUS_CONFIG[status] || { bg: "#f3f4f6", color: "#6b7280" };
+  const config = STATUS_CONFIG[status] || { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" };
   return (
     <Chip
       label={status}

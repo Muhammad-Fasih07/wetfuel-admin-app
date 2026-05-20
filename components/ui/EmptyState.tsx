@@ -36,30 +36,26 @@ export default function EmptyState({
           width: 72,
           height: 72,
           borderRadius: "50%",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#252528",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           mb: 2,
-          color: "#d1d5db",
+          color: "#475569",
         }}
       >
         {icon || <InboxIcon sx={{ fontSize: 36 }} />}
       </Box>
-      <Typography variant="h6" sx={{ fontWeight: 600, color: "#2b2b2b", mb: 0.5 }}>
+      <Typography variant="h6" sx={{ fontWeight: 600, color: "#f1f5f9", mb: 0.5 }}>
         {title}
       </Typography>
       {description && (
-        <Typography variant="body2" sx={{ color: "#887b6a", maxWidth: 360 }}>
+        <Typography variant="body2" sx={{ color: "#64748b", maxWidth: 360 }}>
           {description}
         </Typography>
       )}
       {action && (
-        <Button
-          variant="contained"
-          onClick={action.onClick}
-          sx={{ mt: 3 }}
-        >
+        <Button variant="contained" onClick={action.onClick} sx={{ mt: 3 }}>
           {action.label}
         </Button>
       )}

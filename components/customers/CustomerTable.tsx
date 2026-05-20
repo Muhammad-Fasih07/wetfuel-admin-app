@@ -29,7 +29,7 @@ export default function CustomerTable({ customers }: { customers: Customer[] }) 
             <TableRow key={c.id} hover>
               <TableCell>
                 <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{c.name}</Typography>
-                <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{c.email}</Typography>
+                <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{c.email}</Typography>
               </TableCell>
               <TableCell>{formatPhone(c.phone)}</TableCell>
               <TableCell><StatusChip status={c.status} /></TableCell>
@@ -44,7 +44,7 @@ export default function CustomerTable({ customers }: { customers: Customer[] }) 
               <TableCell>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                   <LocationOnIcon sx={{ fontSize: 14, color: "#9ca3af" }} />
-                  <Typography sx={{ fontSize: "0.75rem", color: "#887b6a", maxWidth: 160, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <Typography sx={{ fontSize: "0.75rem", color: "#64748b", maxWidth: 160, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {c.location}
                   </Typography>
                 </Box>

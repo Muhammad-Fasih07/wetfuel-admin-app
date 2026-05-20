@@ -10,7 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthGuard>
-      <Box sx={{ display: "flex", minHeight: "100vh", backgroundColor: "#f3f4f6" }}>
+      <Box sx={{ display: "flex", minHeight: "100vh", backgroundColor: "#111111" }}>
         <Sidebar />
         <Box sx={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
           <Topbar />

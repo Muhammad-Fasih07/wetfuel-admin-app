@@ -57,8 +57,8 @@ export default function TruckDetailPage() {
                 { label: "Status", value: null, chip: truck.status },
               ].map((f) => (
                 <Box key={f.label} sx={{ display: "flex", justifyContent: "space-between", py: 0.75, borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
-                  <Typography sx={{ fontSize: "0.8rem", color: "#887b6a", fontWeight: 500 }}>{f.label}</Typography>
-                  {f.chip ? <StatusChip status={f.chip as any} /> : <Typography sx={{ fontSize: "0.8rem", color: "#2b2b2b" }}>{f.value}</Typography>}
+                  <Typography sx={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 500 }}>{f.label}</Typography>
+                  {f.chip ? <StatusChip status={f.chip as any} /> : <Typography sx={{ fontSize: "0.8rem", color: "#f1f5f9" }}>{f.value}</Typography>}
                 </Box>
               ))}
             </Box>
@@ -72,7 +72,7 @@ export default function TruckDetailPage() {
                   <Box key={i} sx={{ mb: i < truck.fuelReservoirs.length - 1 ? 2 : 0 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
                       <Typography sx={{ fontSize: "0.8rem", fontWeight: 600 }}>{res.fuelType}</Typography>
-                      <Typography sx={{ fontSize: "0.8rem", color: "#887b6a" }}>{res.currentLevel?.toLocaleString() || 0} / {res.capacity.toLocaleString()} gal</Typography>
+                      <Typography sx={{ fontSize: "0.8rem", color: "#64748b" }}>{res.currentLevel?.toLocaleString() || 0} / {res.capacity.toLocaleString()} gal</Typography>
                     </Box>
                     <LinearProgress
                       variant="determinate"
@@ -80,7 +80,7 @@ export default function TruckDetailPage() {
                       sx={{
                         height: 8,
                         borderRadius: 4,
-                        backgroundColor: "#f0f0f0",
+                        backgroundColor: "rgba(255,255,255,0.08)",
                         "& .MuiLinearProgress-bar": {
                           backgroundColor: pct < 20 ? "#ef4444" : pct < 40 ? "#f59e0b" : "#22c55e",
                           borderRadius: 4,
@@ -106,8 +106,8 @@ export default function TruckDetailPage() {
               <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
                 {serviceFields.map((f) => (
                   <Box key={f.label} sx={{ display: "flex", justifyContent: "space-between", py: 1, borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
-                    <Typography sx={{ fontSize: "0.875rem", color: "#887b6a" }}>{f.label}</Typography>
-                    <Typography sx={{ fontSize: "0.875rem", color: f.warn ? "#f59e0b" : "#2b2b2b", fontWeight: f.warn ? 600 : 400 }}>{f.value}</Typography>
+                    <Typography sx={{ fontSize: "0.875rem", color: "#64748b" }}>{f.label}</Typography>
+                    <Typography sx={{ fontSize: "0.875rem", color: f.warn ? "#f59e0b" : "#f1f5f9", fontWeight: f.warn ? 600 : 400 }}>{f.value}</Typography>
                   </Box>
                 ))}
               </Box>
@@ -132,10 +132,10 @@ export default function TruckDetailPage() {
                     <TableRow key={ins.id} hover>
                       <TableCell>{formatDate(ins.date)}</TableCell>
                       <TableCell>{ins.driverName}</TableCell>
-                      <TableCell><Chip size="small" label={ins.tiresOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.tiresOk ? "#dcfce7" : "#fee2e2", color: ins.tiresOk ? "#15803d" : "#dc2626", fontSize: "0.65rem" }} /></TableCell>
-                      <TableCell><Chip size="small" label={ins.lightsOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.lightsOk ? "#dcfce7" : "#fee2e2", color: ins.lightsOk ? "#15803d" : "#dc2626", fontSize: "0.65rem" }} /></TableCell>
-                      <TableCell><Chip size="small" label={ins.brakesOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.brakesOk ? "#dcfce7" : "#fee2e2", color: ins.brakesOk ? "#15803d" : "#dc2626", fontSize: "0.65rem" }} /></TableCell>
-                      <TableCell sx={{ maxWidth: 200 }}><Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{ins.notes || "—"}</Typography></TableCell>
+                      <TableCell><Chip size="small" label={ins.tiresOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.tiresOk ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)", color: ins.tiresOk ? "#4ade80" : "#f87171", fontSize: "0.65rem" }} /></TableCell>
+                      <TableCell><Chip size="small" label={ins.lightsOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.lightsOk ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)", color: ins.lightsOk ? "#4ade80" : "#f87171", fontSize: "0.65rem" }} /></TableCell>
+                      <TableCell><Chip size="small" label={ins.brakesOk ? "OK" : "Issue"} sx={{ backgroundColor: ins.brakesOk ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)", color: ins.brakesOk ? "#4ade80" : "#f87171", fontSize: "0.65rem" }} /></TableCell>
+                      <TableCell sx={{ maxWidth: 200 }}><Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{ins.notes || "—"}</Typography></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -14,11 +14,11 @@ import { mockJobs } from "./_data";
 import { formatDate } from "@/lib/utils/formatters";
 
 const LANES: { status: JobStatus; label: string; color: string; bg: string }[] = [
-  { status: "New", label: "New Tickets", color: "#7c3aed", bg: "#ede9fe" },
-  { status: "Ready", label: "Ready", color: "#1d4ed8", bg: "#dbeafe" },
-  { status: "Assigned", label: "Assigned", color: "#d97706", bg: "#fef3c7" },
-  { status: "Completed", label: "Completed", color: "#15803d", bg: "#dcfce7" },
-  { status: "Finalized", label: "Finalized", color: "#6b7280", bg: "#f3f4f6" },
+  { status: "New", label: "New Tickets", color: "#a78bfa", bg: "rgba(139,92,246,0.2)" },
+  { status: "Ready", label: "Ready", color: "#60a5fa", bg: "rgba(59,130,246,0.2)" },
+  { status: "Assigned", label: "Assigned", color: "#fbbf24", bg: "rgba(245,158,11,0.2)" },
+  { status: "Completed", label: "Completed", color: "#4ade80", bg: "rgba(34,197,94,0.2)" },
+  { status: "Finalized", label: "Finalized", color: "#94a3b8", bg: "rgba(255,255,255,0.08)" },
 ];
 
 const FUEL_COLORS: Record<string, string> = {
@@ -32,29 +32,29 @@ function TicketCard({ ticket }: { ticket: JobTicket }) {
   return (
     <Box
       sx={{
-        background: "white",
+        background: "#252528",
         borderRadius: "12px",
-        border: "1px solid rgba(0,0,0,0.07)",
+        border: "1px solid rgba(255,255,255,0.07)",
         p: 2,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+        boxShadow: "0 1px 4px rgba(255,255,255,0.07)",
         cursor: "pointer",
         transition: "all 150ms",
         "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.1)", transform: "translateY(-1px)" },
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1.5 }}>
-        <Typography sx={{ fontSize: "0.7rem", fontFamily: "monospace", color: "#887b6a", fontWeight: 600 }}>
+        <Typography sx={{ fontSize: "0.7rem", fontFamily: "monospace", color: "#64748b", fontWeight: 600 }}>
           {ticket.ticketNumber}
         </Typography>
         {ticket.isRecurring && (
-          <Chip label="Recurring" size="small" sx={{ fontSize: "0.6rem", height: 18, backgroundColor: "#ede9fe", color: "#7c3aed" }} />
+          <Chip label="Recurring" size="small" sx={{ fontSize: "0.6rem", height: 18, backgroundColor: "rgba(139,92,246,0.2)", color: "#a78bfa" }} />
         )}
       </Box>
 
-      <Typography sx={{ fontWeight: 600, fontSize: "0.875rem", mb: 0.5, color: "#2b2b2b" }}>
+      <Typography sx={{ fontWeight: 600, fontSize: "0.875rem", mb: 0.5, color: "#f1f5f9" }}>
         {ticket.customerName}
       </Typography>
-      <Typography sx={{ fontSize: "0.75rem", color: "#887b6a", mb: 1.5 }}>
+      <Typography sx={{ fontSize: "0.75rem", color: "#64748b", mb: 1.5 }}>
         {ticket.equipmentName}
       </Typography>
 
@@ -78,11 +78,11 @@ function TicketCard({ ticket }: { ticket: JobTicket }) {
       </Box>
 
       {ticket.assignedDriverName && (
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mt: 1.5, pt: 1.5, borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mt: 1.5, pt: 1.5, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <Avatar sx={{ width: 22, height: 22, fontSize: "0.6rem", background: "linear-gradient(135deg, #cd171a, #bf2524)" }}>
             {ticket.assignedDriverName.charAt(0)}
           </Avatar>
-          <Typography sx={{ fontSize: "0.75rem", color: "#2b2b2b", fontWeight: 500 }}>
+          <Typography sx={{ fontSize: "0.75rem", color: "#f1f5f9", fontWeight: 500 }}>
             {ticket.assignedDriverName}
           </Typography>
           {ticket.assignedTruckPlate && (
@@ -92,7 +92,7 @@ function TicketCard({ ticket }: { ticket: JobTicket }) {
       )}
 
       {ticket.dailyFuelPrice && (
-        <Typography sx={{ fontSize: "0.7rem", color: "#887b6a", mt: 1 }}>
+        <Typography sx={{ fontSize: "0.7rem", color: "#64748b", mt: 1 }}>
           @ ${ticket.dailyFuelPrice.toFixed(3)}/gal
         </Typography>
       )}
@@ -136,9 +136,9 @@ export default function JobsPage() {
             <Box
               key={lane.status}
               sx={{
-                backgroundColor: "#f8f9fa",
+                backgroundColor: "#1a1a1c",
                 borderRadius: "14px",
-                border: "1px solid rgba(0,0,0,0.06)",
+                border: "1px solid rgba(255,255,255,0.07)",
                 minHeight: 500,
                 display: "flex",
                 flexDirection: "column",
@@ -152,13 +152,13 @@ export default function JobsPage() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  borderBottom: "1px solid rgba(0,0,0,0.06)",
-                  backgroundColor: "white",
+                  borderBottom: "1px solid rgba(255,255,255,0.07)",
+                  backgroundColor: "#252528",
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <Box sx={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: lane.color }} />
-                  <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, color: "#2b2b2b" }}>
+                  <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, color: "#f1f5f9" }}>
                     {lane.label}
                   </Typography>
                 </Box>

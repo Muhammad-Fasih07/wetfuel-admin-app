@@ -59,7 +59,7 @@ export default function RegisterDriverForm({
 
   return (
     <Box component="form" onSubmit={handleSubmit(handleFormSubmit)}>
-      <Typography variant="subtitle2" sx={{ mb: 2, color: "#887b6a", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
+      <Typography variant="subtitle2" sx={{ mb: 2, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
         Personal Information
       </Typography>
       <Grid container spacing={2.5} sx={{ mb: 3 }}>
@@ -89,7 +89,7 @@ export default function RegisterDriverForm({
       </Grid>
 
       <Divider sx={{ mb: 3 }} />
-      <Typography variant="subtitle2" sx={{ mb: 2, color: "#887b6a", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
+      <Typography variant="subtitle2" sx={{ mb: 2, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
         Emergency Contact
       </Typography>
       <Grid container spacing={2.5} sx={{ mb: 3 }}>
@@ -102,7 +102,7 @@ export default function RegisterDriverForm({
       </Grid>
 
       <Divider sx={{ mb: 3 }} />
-      <Typography variant="subtitle2" sx={{ mb: 2, color: "#887b6a", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
+      <Typography variant="subtitle2" sx={{ mb: 2, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
         Licence Details
       </Typography>
       <Grid container spacing={2.5} sx={{ mb: 3 }}>
@@ -121,7 +121,7 @@ export default function RegisterDriverForm({
 
       <Divider sx={{ mb: 3 }} />
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
-        <Typography variant="subtitle2" sx={{ color: "#887b6a", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
+        <Typography variant="subtitle2" sx={{ color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontSize: "0.7rem" }}>
           Certifications
         </Typography>
         <Button size="small" startIcon={<AddIcon />} onClick={addCert} sx={{ fontSize: "0.75rem" }}>
@@ -160,7 +160,7 @@ export default function RegisterDriverForm({
         )}
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, pt: 2, borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, pt: 2, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
         <Button variant="outlined" type="button" disabled={loading}>Cancel</Button>
         <Button variant="contained" type="submit" disabled={loading}>{loading ? "Saving…" : submitLabel}</Button>
       </Box>

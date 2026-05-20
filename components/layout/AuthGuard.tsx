@@ -40,7 +40,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#111111",
         }}
       >
         <CircularProgress sx={{ color: "#ce1c1a" }} />

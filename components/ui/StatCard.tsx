@@ -30,16 +30,16 @@ export default function StatCard({
   return (
     <Box
       sx={{
-        background: "white",
+        background: "#1c1c1e",
         borderRadius: "14px",
-        border: "1px solid rgba(0,0,0,0.06)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
         p: 3,
         display: "flex",
         gap: 2,
         alignItems: "flex-start",
         transition: "box-shadow 250ms",
-        "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.1)" },
+        "&:hover": { boxShadow: "0 8px 32px rgba(0,0,0,0.4)" },
       }}
     >
       <Box
@@ -61,7 +61,7 @@ export default function StatCard({
         <Typography
           variant="caption"
           sx={{
-            color: "#887b6a",
+            color: "#64748b",
             fontWeight: 500,
             fontSize: "0.7rem",
             textTransform: "uppercase",
@@ -72,7 +72,7 @@ export default function StatCard({
         </Typography>
         <Typography
           variant="h5"
-          sx={{ fontWeight: 700, color: "#2b2b2b", mt: 0.25, lineHeight: 1.2 }}
+          sx={{ fontWeight: 700, color: "#f1f5f9", mt: 0.25, lineHeight: 1.2 }}
         >
           {value}
         </Typography>
@@ -81,14 +81,14 @@ export default function StatCard({
             {trend !== undefined && (
               <>
                 {isPositive ? (
-                  <TrendingUpIcon sx={{ fontSize: 14, color: "#22c55e" }} />
+                  <TrendingUpIcon sx={{ fontSize: 14, color: "#4ade80" }} />
                 ) : (
-                  <TrendingDownIcon sx={{ fontSize: 14, color: "#ef4444" }} />
+                  <TrendingDownIcon sx={{ fontSize: 14, color: "#f87171" }} />
                 )}
                 <Typography
                   variant="caption"
                   sx={{
-                    color: isPositive ? "#22c55e" : "#ef4444",
+                    color: isPositive ? "#4ade80" : "#f87171",
                     fontWeight: 600,
                     fontSize: "0.7rem",
                   }}
@@ -99,18 +99,12 @@ export default function StatCard({
               </>
             )}
             {trendLabel && (
-              <Typography
-                variant="caption"
-                sx={{ color: "#9ca3af", fontSize: "0.7rem" }}
-              >
+              <Typography variant="caption" sx={{ color: "#64748b", fontSize: "0.7rem" }}>
                 {trendLabel}
               </Typography>
             )}
             {subtitle && !trend && (
-              <Typography
-                variant="caption"
-                sx={{ color: "#9ca3af", fontSize: "0.7rem" }}
-              >
+              <Typography variant="caption" sx={{ color: "#64748b", fontSize: "0.7rem" }}>
                 {subtitle}
               </Typography>
             )}

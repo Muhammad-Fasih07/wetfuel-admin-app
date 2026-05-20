@@ -1,14 +1,6 @@
 export default function DashboardLoading() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 24,
-        padding: 24,
-        width: "100%",
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", gap: 24, padding: 24, width: "100%" }}>
       {/* Page header skeleton */}
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div className="shimmer" style={{ height: 14, width: 180, borderRadius: 6 }} />
@@ -16,20 +8,14 @@ export default function DashboardLoading() {
       </div>
 
       {/* Stat cards skeleton */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          gap: 16,
-        }}
-      >
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 16 }}>
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
             style={{
-              background: "white",
+              background: "#1c1c1e",
               borderRadius: 14,
-              border: "1px solid rgba(0,0,0,0.06)",
+              border: "1px solid rgba(255,255,255,0.07)",
               padding: 20,
               display: "flex",
               gap: 16,
@@ -47,18 +33,12 @@ export default function DashboardLoading() {
       </div>
 
       {/* Content area skeleton */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-          gap: 16,
-        }}
-      >
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 16 }}>
         <div
           style={{
-            background: "white",
+            background: "#1c1c1e",
             borderRadius: 14,
-            border: "1px solid rgba(0,0,0,0.06)",
+            border: "1px solid rgba(255,255,255,0.07)",
             padding: 24,
             display: "flex",
             flexDirection: "column",
@@ -72,9 +52,9 @@ export default function DashboardLoading() {
         </div>
         <div
           style={{
-            background: "white",
+            background: "#1c1c1e",
             borderRadius: 14,
-            border: "1px solid rgba(0,0,0,0.06)",
+            border: "1px solid rgba(255,255,255,0.07)",
             padding: 24,
             display: "flex",
             flexDirection: "column",

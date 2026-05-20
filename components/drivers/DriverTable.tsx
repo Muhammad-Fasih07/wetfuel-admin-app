@@ -59,10 +59,10 @@ export default function DriverTable({ drivers }: DriverTableProps) {
                       {getInitials(driver.name)}
                     </Avatar>
                     <Box>
-                      <Typography sx={{ fontSize: "0.875rem", fontWeight: 600, color: "#2b2b2b" }}>
+                      <Typography sx={{ fontSize: "0.875rem", fontWeight: 600, color: "#f1f5f9" }}>
                         {driver.name}
                       </Typography>
-                      <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>
+                      <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>
                         {driver.email}
                       </Typography>
                     </Box>
@@ -85,7 +85,7 @@ export default function DriverTable({ drivers }: DriverTableProps) {
                   <Typography
                     sx={{
                       fontSize: "0.875rem",
-                      color: expired ? "#ef4444" : expiringSoon ? "#f59e0b" : "#2b2b2b",
+                      color: expired ? "#ef4444" : expiringSoon ? "#f59e0b" : "#f1f5f9",
                       fontWeight: expired || expiringSoon ? 600 : 400,
                     }}
                   >
@@ -95,7 +95,7 @@ export default function DriverTable({ drivers }: DriverTableProps) {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography sx={{ fontSize: "0.8rem", color: "#887b6a" }}>
+                  <Typography sx={{ fontSize: "0.8rem", color: "#64748b" }}>
                     {driver.certifications.length > 0
                       ? driver.certifications.map((c) => c.name).join(", ")
                       : "—"}

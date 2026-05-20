@@ -10,19 +10,19 @@ import { mockMainTanks, mockTruckFuelLevels, mockPackagedGoods, mockTransferLogs
 import { formatDateTime } from "@/lib/utils/formatters";
 
 const FUEL_COLORS: Record<string, { bar: string; text: string; bg: string }> = {
-  Regular: { bar: "#3b82f6", text: "#1d4ed8", bg: "#dbeafe" },
-  Premium: { bar: "#8b5cf6", text: "#7c3aed", bg: "#ede9fe" },
-  Diesel: { bar: "#f59e0b", text: "#d97706", bg: "#fef3c7" },
-  DEF: { bar: "#22c55e", text: "#15803d", bg: "#dcfce7" },
+  Regular: { bar: "#3b82f6", text: "#60a5fa", bg: "rgba(59,130,246,0.2)" },
+  Premium: { bar: "#8b5cf6", text: "#a78bfa", bg: "rgba(139,92,246,0.2)" },
+  Diesel: { bar: "#f59e0b", text: "#fbbf24", bg: "rgba(245,158,11,0.2)" },
+  DEF: { bar: "#22c55e", text: "#4ade80", bg: "rgba(34,197,94,0.2)" },
 };
 
 function TankCard({ tank }: { tank: any }) {
   const pct = Math.round((tank.currentLevel / tank.capacity) * 100);
-  const c = FUEL_COLORS[tank.fuelType] || { bar: "#6b7280", text: "#6b7280", bg: "#f3f4f6" };
+  const c = FUEL_COLORS[tank.fuelType] || { bar: "#6b7280", text: "#94a3b8", bg: "rgba(255,255,255,0.08)" };
   const isLow = pct < 30;
 
   return (
-    <Box sx={{ p: 2.5, borderRadius: "12px", border: "1px solid rgba(0,0,0,0.06)", background: "white" }}>
+    <Box sx={{ p: 2.5, borderRadius: "12px", border: "1px solid rgba(255,255,255,0.07)", background: "#252528" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
         <Box>
           <Chip label={tank.fuelType} size="small" sx={{ backgroundColor: c.bg, color: c.text, fontWeight: 700, mb: 0.75 }} />
@@ -40,13 +40,13 @@ function TankCard({ tank }: { tank: any }) {
         sx={{
           height: 10,
           borderRadius: 5,
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "rgba(255,255,255,0.08)",
           mb: 1,
           "& .MuiLinearProgress-bar": { backgroundColor: isLow ? "#ef4444" : c.bar, borderRadius: 5 },
         }}
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography sx={{ fontSize: "0.8rem", color: "#887b6a", fontWeight: 600 }}>
+        <Typography sx={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
           {tank.currentLevel.toLocaleString()} gal
         </Typography>
         <Typography sx={{ fontSize: "0.8rem", color: "#9ca3af" }}>
@@ -54,7 +54,7 @@ function TankCard({ tank }: { tank: any }) {
         </Typography>
       </Box>
       {isLow && (
-        <Box sx={{ mt: 1.5, p: 1, borderRadius: "8px", backgroundColor: "#fee2e2", display: "flex", alignItems: "center", gap: 1 }}>
+        <Box sx={{ mt: 1.5, p: 1, borderRadius: "8px", backgroundColor: "rgba(239,68,68,0.15)", display: "flex", alignItems: "center", gap: 1 }}>
           <Typography sx={{ fontSize: "0.7rem", color: "#ef4444", fontWeight: 600 }}>⚠ Low inventory — consider restocking</Typography>
         </Box>
       )}
@@ -118,12 +118,12 @@ export default function InventoryPage() {
                   </TableCell>
                   <TableCell sx={{ minWidth: 180 }}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                      <LinearProgress variant="determinate" value={pct} sx={{ flex: 1, height: 6, borderRadius: 3, backgroundColor: "#f0f0f0", "& .MuiLinearProgress-bar": { backgroundColor: pct < 20 ? "#ef4444" : pct < 40 ? "#f59e0b" : "#22c55e", borderRadius: 3 } }} />
+                      <LinearProgress variant="determinate" value={pct} sx={{ flex: 1, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.08)", "& .MuiLinearProgress-bar": { backgroundColor: pct < 20 ? "#ef4444" : pct < 40 ? "#f59e0b" : "#22c55e", borderRadius: 3 } }} />
                       <Typography sx={{ fontSize: "0.75rem", fontWeight: 600, minWidth: 35 }}>{pct}%</Typography>
                     </Box>
                     <Typography sx={{ fontSize: "0.7rem", color: "#9ca3af" }}>{t.currentLevel.toLocaleString()} / {t.capacity.toLocaleString()} gal</Typography>
                   </TableCell>
-                  <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{formatDateTime(t.lastUpdated)}</Typography></TableCell>
+                  <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{formatDateTime(t.lastUpdated)}</Typography></TableCell>
                 </TableRow>
               );
             })}
@@ -154,7 +154,7 @@ export default function InventoryPage() {
                     <TableCell><Typography sx={{ fontSize: "0.8rem", fontWeight: 700 }}>{g.quantity} {g.unit}</Typography></TableCell>
                     <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#9ca3af" }}>{g.minStockAlert}</Typography></TableCell>
                     <TableCell>
-                      <Chip size="small" label={g.quantity <= g.minStockAlert ? "Low" : "OK"} sx={{ fontSize: "0.65rem", backgroundColor: g.quantity <= g.minStockAlert ? "#fee2e2" : "#dcfce7", color: g.quantity <= g.minStockAlert ? "#dc2626" : "#15803d" }} />
+                      <Chip size="small" label={g.quantity <= g.minStockAlert ? "Low" : "OK"} sx={{ fontSize: "0.65rem", backgroundColor: g.quantity <= g.minStockAlert ? "rgba(239,68,68,0.15)" : "rgba(34,197,94,0.15)", color: g.quantity <= g.minStockAlert ? "#f87171" : "#4ade80" }} />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -187,7 +187,7 @@ export default function InventoryPage() {
                     </TableCell>
                     <TableCell><Typography sx={{ fontSize: "0.875rem", fontWeight: 600 }}>{log.gallons.toLocaleString()}</Typography></TableCell>
                     <TableCell><Typography sx={{ fontSize: "0.75rem" }}>{log.performedBy}</Typography></TableCell>
-                    <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>{formatDateTime(log.createdAt)}</Typography></TableCell>
+                    <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{formatDateTime(log.createdAt)}</Typography></TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -33,7 +33,7 @@ function QRCodeBadge({ code }: { code: string }) {
       sx={{
         p: 2,
         borderRadius: "12px",
-        border: "1px solid rgba(0,0,0,0.08)",
+        border: "1px solid rgba(255,255,255,0.08)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -48,16 +48,16 @@ function QRCodeBadge({ code }: { code: string }) {
           width: 80,
           height: 80,
           borderRadius: "8px",
-          backgroundColor: "#f3f4f6",
+          backgroundColor: "#252528",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           border: "2px solid #e5e7eb",
         }}
       >
-        <QrCodeIcon sx={{ fontSize: 48, color: "#2b2b2b" }} />
+        <QrCodeIcon sx={{ fontSize: 48, color: "#f1f5f9" }} />
       </Box>
-      <Typography sx={{ fontSize: "0.7rem", fontFamily: "monospace", fontWeight: 700, color: "#2b2b2b" }}>
+      <Typography sx={{ fontSize: "0.7rem", fontFamily: "monospace", fontWeight: 700, color: "#f1f5f9" }}>
         {code}
       </Typography>
     </Paper>
@@ -105,10 +105,10 @@ export default function QRCodesPage() {
                     </TableCell>
                     <TableCell>{req.equipmentName}</TableCell>
                     <TableCell>
-                      <Typography sx={{ fontSize: "0.8rem", color: "#887b6a" }}>{formatDateTime(req.submittedAt)}</Typography>
+                      <Typography sx={{ fontSize: "0.8rem", color: "#64748b" }}>{formatDateTime(req.submittedAt)}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Chip label="Pending" size="small" sx={{ backgroundColor: "#fef3c7", color: "#d97706", fontWeight: 600 }} />
+                      <Chip label="Pending" size="small" sx={{ backgroundColor: "rgba(245,158,11,0.15)", color: "#fbbf24", fontWeight: 600 }} />
                     </TableCell>
                     <TableCell align="right">
                       <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>

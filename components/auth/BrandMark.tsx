@@ -35,7 +35,7 @@ export default function BrandMark({ size = "md", dark = false }: BrandMarkProps)
           sx={{
             fontWeight: 800,
             fontSize: fontSizes[size],
-            color: dark ? "#2b2b2b" : "white",
+            color: dark ? "#f1f5f9" : "white",
             lineHeight: 1,
             letterSpacing: "-0.02em",
           }}
@@ -45,7 +45,7 @@ export default function BrandMark({ size = "md", dark = false }: BrandMarkProps)
         <Typography
           sx={{
             fontSize: "0.6rem",
-            color: dark ? "#887b6a" : "rgba(255,255,255,0.55)",
+            color: dark ? "#64748b" : "rgba(255,255,255,0.55)",
             fontWeight: 500,
             letterSpacing: "0.1em",
             textTransform: "uppercase",

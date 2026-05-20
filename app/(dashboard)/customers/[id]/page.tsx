@@ -55,7 +55,7 @@ export default function CustomerDetailPage() {
                 { label: "Geofence Radius", value: `${customer.geofencedRadius} mi` },
               ].map((f) => (
                 <Box key={f.label} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: 0.9, borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
-                  <Typography sx={{ fontSize: "0.8rem", color: "#887b6a", fontWeight: 500 }}>{f.label}</Typography>
+                  <Typography sx={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 500 }}>{f.label}</Typography>
                   {f.chip ? <StatusChip status={f.chip as any} /> : <Typography sx={{ fontSize: "0.8rem", maxWidth: "55%", textAlign: "right" }}>{f.value}</Typography>}
                 </Box>
               ))}
@@ -74,7 +74,7 @@ export default function CustomerDetailPage() {
                   const exempt = customer.taxExemptions[tax.key as keyof typeof customer.taxExemptions];
                   return (
                     <Chip key={tax.key} label={tax.label} size="small"
-                      sx={{ backgroundColor: exempt ? "#dcfce7" : "#f3f4f6", color: exempt ? "#15803d" : "#9ca3af", fontWeight: 500 }}
+                      sx={{ backgroundColor: exempt ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.08)", color: exempt ? "#4ade80" : "#64748b", fontWeight: 500 }}
                     />
                   );
                 })}
@@ -99,7 +99,7 @@ export default function CustomerDetailPage() {
                   <Box key={eq.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(0,0,0,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Box>
                       <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{eq.name}</Typography>
-                      <Typography sx={{ fontSize: "0.75rem", color: "#887b6a" }}>
+                      <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>
                         {eq.fuelType} — {eq.maxCapacity} gal max
                         {eq.registeredQrCode && ` — QR: ${eq.registeredQrCode}`}
                       </Typography>

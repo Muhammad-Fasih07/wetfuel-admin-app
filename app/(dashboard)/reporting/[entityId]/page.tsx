@@ -30,7 +30,7 @@ export default function EntityReportPage() {
       <SectionCard title="Fueling History" subtitle="Last 6 weeks">
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={mockChartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
             <XAxis dataKey="date" tick={{ fontSize: 11 }} />
             <YAxis tick={{ fontSize: 11 }} />
             <Tooltip contentStyle={{ borderRadius: 10, fontSize: 12 }} />
