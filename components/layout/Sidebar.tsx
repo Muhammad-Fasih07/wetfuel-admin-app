@@ -21,7 +21,6 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 interface NavLink {
   label: string;
@@ -64,16 +63,17 @@ export default function Sidebar() {
       style={{ backgroundColor: "#141414" }}
       sx={{
         width: sidebarCollapsed ? 68 : 220,
-        minHeight: "100vh",
+        height: "100vh",
         backgroundColor: "#141414 !important",
         display: "flex",
         flexDirection: "column",
         flexShrink: 0,
         transition: "width 250ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
-        position: "sticky",
+        position: "fixed",
         top: 0,
-        zIndex: 100,
+        left: 0,
+        zIndex: 110,
         borderRight: "1px solid rgba(255,255,255,0.06)",
       }}
     >
@@ -119,7 +119,7 @@ export default function Sidebar() {
                 WetFuel
               </Typography>
               <Typography sx={{ fontSize: "0.58rem", fontWeight: 600, color: "rgba(255,255,255,0.35)", letterSpacing: "0.08em" }}>
-                FRANCHISE ADMIN
+                ADMIN PANEL
               </Typography>
             </Box>
           </Box>
@@ -300,69 +300,6 @@ export default function Sidebar() {
           );
         })}
       </Box>
-
-      {/* ── Need Help Card ── */}
-      {!sidebarCollapsed && (
-        <Box sx={{ px: 1.25, pb: 1 }}>
-          <Box
-            sx={{
-              borderRadius: "12px",
-              background: "linear-gradient(135deg, #1c0505 0%, #3b0a0a 60%, #2a0808 100%)",
-              border: "1px solid rgba(206,28,26,0.2)",
-              p: 1.75,
-              color: "white",
-              position: "relative",
-              overflow: "hidden",
-              /* red glow in top-right corner */
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                top: -20,
-                right: -20,
-                width: 80,
-                height: 80,
-                borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(206,28,26,0.45) 0%, transparent 70%)",
-                pointerEvents: "none",
-              },
-            }}
-          >
-            {/* Icon */}
-            <Box
-              sx={{
-                width: 32,
-                height: 32,
-                borderRadius: "8px",
-                backgroundColor: "#ce1c1a",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                mb: 1,
-              }}
-            >
-              <HelpOutlineIcon sx={{ fontSize: 17, color: "white" }} />
-            </Box>
-
-            <Typography sx={{ fontSize: "0.8rem", fontWeight: 700, mb: 0.4 }}>
-              Need help?
-            </Typography>
-            <Typography sx={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.55)", mb: 1.25, lineHeight: 1.45 }}>
-              Reach our team for onboarding &amp; data migration.
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "0.7rem",
-                fontWeight: 600,
-                color: "#f87171",
-                cursor: "pointer",
-                "&:hover": { color: "#fca5a5" },
-              }}
-            >
-              Contact support →
-            </Typography>
-          </Box>
-        </Box>
-      )}
 
       {/* ── User profile + Logout ── */}
       <Box
