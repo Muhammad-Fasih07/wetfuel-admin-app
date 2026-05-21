@@ -50,7 +50,6 @@ export default function Topbar() {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        flexShrink: 0,
         boxShadow: "0 1px 8px rgba(0,0,0,0.3)",
       }}
     >
