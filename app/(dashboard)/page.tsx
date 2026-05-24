@@ -78,7 +78,6 @@ export default function DashboardPage() {
                     borderRadius: "10px",
                     border: "1px solid rgba(255,255,255,0.07)",
                     textDecoration: "none",
-                    transition: "all 150ms",
                     ...cardHoverBorderSx,
                     "&:hover": {
                       ...cardHoverBorderSx["&:hover"],

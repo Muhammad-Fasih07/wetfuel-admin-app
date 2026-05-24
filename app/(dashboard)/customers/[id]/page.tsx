@@ -10,13 +10,15 @@ import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
 import StatusChip from "@/components/ui/StatusChip";
 import { mockCustomers, mockFuelRequests } from "../_data";
-import { formatPhone, formatDate } from "@/lib/utils/formatters";
+import { mockInvoices, INVOICE_STATUS_COLORS } from "../../invoices/_data";
+import { formatPhone, formatDate, formatCurrency } from "@/lib/utils/formatters";
 
 export default function CustomerDetailPage() {
   const { id } = useParams();
   const [tab, setTab] = useState(0);
   const customer = mockCustomers.find((c) => c.id === id);
   const requests = mockFuelRequests.filter((r) => r.customerId === id);
+  const invoices = mockInvoices.filter((inv) => inv.customerId === id);
 
   if (!customer) return <Box sx={{ p: 4 }}>Customer not found</Box>;
 
@@ -88,7 +90,7 @@ export default function CustomerDetailPage() {
             <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: "1px solid rgba(0,0,0,0.06)", mb: 2 }}>
               <Tab label={`Equipment (${customer.equipment.length})`} />
               <Tab label="Fuel Requests" />
-              <Tab label="Invoices" />
+              <Tab label={`Invoices (${invoices.length})`} />
             </Tabs>
 
             {tab === 0 && (
@@ -138,10 +140,63 @@ export default function CustomerDetailPage() {
             )}
 
             {tab === 2 && (
-              <Typography sx={{ textAlign: "center", py: 4, color: "#9ca3af", fontSize: "0.875rem" }}>
-                View all invoices in the{" "}
-                <Link href="/invoices" style={{ color: "#ce1c1a" }}>Invoices</Link>{" "}section
-              </Typography>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Invoice #</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Due Date</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {invoices.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} sx={{ textAlign: "center", py: 3, color: "#9ca3af" }}>
+                        No invoices
+                      </TableCell>
+                    </TableRow>
+                  ) : invoices.map((inv) => {
+                    const sc = INVOICE_STATUS_COLORS[inv.status] || { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" };
+                    return (
+                      <TableRow key={inv.id} hover>
+                        <TableCell>
+                          <Typography sx={{ fontFamily: "monospace", fontWeight: 700, fontSize: "0.8rem" }}>
+                            {inv.invoiceNumber}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography
+                            sx={{
+                              fontSize: "0.875rem",
+                              fontWeight: 700,
+                              color: inv.status === "Overdue" ? "#ef4444" : "#f1f5f9",
+                            }}
+                          >
+                            {formatCurrency(inv.amount)}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Chip label={inv.status} size="small" sx={{ backgroundColor: sc.bg, color: sc.color, fontWeight: 600 }} />
+                        </TableCell>
+                        <TableCell>{formatDate(inv.date)}</TableCell>
+                        <TableCell>
+                          <Typography
+                            sx={{
+                              fontSize: "0.8rem",
+                              color: inv.status === "Overdue" ? "#ef4444" : "#f1f5f9",
+                              fontWeight: inv.status === "Overdue" ? 600 : 400,
+                            }}
+                          >
+                            {formatDate(inv.dueDate)}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
             )}
           </SectionCard>
         </Grid>

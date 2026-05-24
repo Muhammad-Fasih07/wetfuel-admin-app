@@ -8,22 +8,7 @@ import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
 import UnderDevelopmentModal, { type DevFeatureKey } from "@/components/ui/UnderDevelopmentModal";
 import { formatDate, formatCurrency } from "@/lib/utils/formatters";
-
-const mockInvoices = [
-  { id: "inv1", invoiceNumber: "INV-2024-0041", customerName: "Capitol Fleet Services", amount: 8420.50, status: "Paid", date: "2024-11-01", dueDate: "2024-11-15" },
-  { id: "inv2", invoiceNumber: "INV-2024-0042", customerName: "Lone Star Agriculture", amount: 14830.00, status: "Outstanding", date: "2024-11-03", dueDate: "2024-11-17" },
-  { id: "inv3", invoiceNumber: "INV-2024-0043", customerName: "Austin Construction LLC", amount: 3210.25, status: "Outstanding", date: "2024-11-05", dueDate: "2024-11-19" },
-  { id: "inv4", invoiceNumber: "INV-2024-0044", customerName: "Capitol Fleet Services", amount: 6950.75, status: "Draft", date: "2024-11-07", dueDate: "2024-11-21" },
-  { id: "inv5", invoiceNumber: "INV-2024-0045", customerName: "Austin Construction LLC", amount: 293.23, status: "Paid", date: "2024-11-06", dueDate: "2024-11-20" },
-  { id: "inv6", invoiceNumber: "INV-2024-0040", customerName: "Lone Star Agriculture", amount: 22180.00, status: "Overdue", date: "2024-10-15", dueDate: "2024-10-29" },
-];
-
-const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
-  Paid: { bg: "rgba(34,197,94,0.15)", color: "#4ade80" },
-  Outstanding: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
-  Draft: { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" },
-  Overdue: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
-};
+import { mockInvoices, INVOICE_STATUS_COLORS } from "./_data";
 
 const STATUSES = ["All", "Draft", "Outstanding", "Paid", "Overdue"];
 
@@ -86,7 +71,7 @@ export default function InvoicesPage() {
           </TableHead>
           <TableBody>
             {filtered.map((inv) => {
-              const sc = STATUS_COLORS[inv.status] || { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" };
+              const sc = INVOICE_STATUS_COLORS[inv.status] || { bg: "rgba(255,255,255,0.08)", color: "#94a3b8" };
               return (
                 <TableRow key={inv.id} hover>
                   <TableCell>

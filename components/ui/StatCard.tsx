@@ -40,7 +40,6 @@ export default function StatCard({
     display: "flex",
     gap: 2,
     alignItems: "flex-start",
-    transition: "box-shadow 250ms, transform 150ms, border-color 150ms",
     ...cardHoverBorderSx,
     ...(href && {
       textDecoration: "none",

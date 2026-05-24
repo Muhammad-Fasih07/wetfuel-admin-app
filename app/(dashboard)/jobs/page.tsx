@@ -41,7 +41,6 @@ function TicketCard({ ticket, onClick }: { ticket: JobTicket; onClick: () => voi
         p: 2,
         boxShadow: "0 1px 4px rgba(255,255,255,0.07)",
         cursor: "pointer",
-        transition: "all 150ms",
         ...cardHoverBorderSx,
         "&:hover": {
           ...cardHoverBorderSx["&:hover"],
