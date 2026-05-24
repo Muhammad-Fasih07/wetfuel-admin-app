@@ -3,7 +3,9 @@ export type TransferType =
   | "truck-to-truck"
   | "truck-to-main"
   | "third-party-purchase"
-  | "dispensed";
+  | "dispensed"
+  | "adjustment"
+  | "spill";
 
 export interface MainTank {
   id: string;

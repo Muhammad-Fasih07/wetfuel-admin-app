@@ -1,31 +1,38 @@
 "use client";
 
-import { Box, Typography, Chip, Button, Table, TableBody, TableCell, TableHead, TableRow, Avatar, Divider } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
+import {
+  Box,
+  Typography,
+  Chip,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import FlagIcon from "@mui/icons-material/Flag";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
-import QrCodeIcon from "@mui/icons-material/QrCode";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
+import FlaggedActivityModal from "@/components/activity/FlaggedActivityModal";
+import CustomerRegistrationModal from "@/components/activity/CustomerRegistrationModal";
+import ChangeRequestModal from "@/components/activity/ChangeRequestModal";
+import {
+  mockFlaggedActivities,
+  mockRegistrationRequests,
+  mockChangeRequests,
+  type FlaggedActivity,
+  type RegistrationRequest,
+  type ChangeRequest,
+} from "./_data";
 import { formatDateTime } from "@/lib/utils/formatters";
-
-const flaggedActivities = [
-  { id: "f1", type: "Unusual Volume", customer: "Capitol Fleet Services", driver: "Marcus Rivera", details: "Delivered 312 gal vs requested 200 gal — 56% overage", severity: "high", time: "2024-11-07T14:30:00Z" },
-  { id: "f2", type: "GPS Mismatch", customer: "Lone Star Agriculture", driver: "Jordan Kelley", details: "Delivery location 2.8 miles outside geofenced zone", severity: "medium", time: "2024-11-07T11:15:00Z" },
-  { id: "f3", type: "Extended Stop", customer: "Austin Construction LLC", driver: "Diana Cortez", details: "Truck stopped for 47 minutes during delivery window", severity: "low", time: "2024-11-06T09:00:00Z" },
-];
-
-const registrationRequests = [
-  { id: "r1", type: "New Customer", name: "Bluestone Drilling Inc.", email: "ops@bluestone.com", phone: "5125551201", submittedAt: "2024-11-08T08:30:00Z" },
-  { id: "r2", type: "New Customer", name: "HVAC Pro Services LLC", email: "dispatch@hvacpro.com", phone: "5125551301", submittedAt: "2024-11-07T16:00:00Z" },
-];
-
-const changeRequests = [
-  { id: "c1", type: "Location Change", customer: "Capitol Fleet Services", current: "4200 N Lamar Blvd", requested: "4800 N Lamar Blvd", submittedAt: "2024-11-08T10:00:00Z" },
-  { id: "c2", type: "Location Photo Update", customer: "Austin Construction LLC", current: "2 photos", requested: "New photos attached", submittedAt: "2024-11-07T15:00:00Z" },
-];
+import { useUIStore } from "@/store/uiStore";
 
 const SEVERITY_COLORS: Record<string, { bg: string; color: string }> = {
   high: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
@@ -34,6 +41,42 @@ const SEVERITY_COLORS: Record<string, { bg: string; color: string }> = {
 };
 
 export default function ActivityPage() {
+  const { addToast } = useUIStore();
+  const [flaggedActivities, setFlaggedActivities] = useState<FlaggedActivity[]>(mockFlaggedActivities);
+  const [registrationRequests, setRegistrationRequests] = useState<RegistrationRequest[]>(mockRegistrationRequests);
+  const [changeRequests, setChangeRequests] = useState<ChangeRequest[]>(mockChangeRequests);
+  const [selectedFlag, setSelectedFlag] = useState<FlaggedActivity | null>(null);
+  const [selectedRegistration, setSelectedRegistration] = useState<RegistrationRequest | null>(null);
+  const [selectedChange, setSelectedChange] = useState<ChangeRequest | null>(null);
+
+  const handleApproveRegistration = (id: string) => {
+    const req = registrationRequests.find((r) => r.id === id);
+    setRegistrationRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedRegistration(null);
+    addToast({ type: "success", message: `${req?.name ?? "Customer"} approved.` });
+  };
+
+  const handleRejectRegistration = (id: string) => {
+    const req = registrationRequests.find((r) => r.id === id);
+    setRegistrationRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedRegistration(null);
+    addToast({ type: "warning", message: `${req?.name ?? "Customer"} registration rejected.` });
+  };
+
+  const handleApproveChange = (id: string) => {
+    const req = changeRequests.find((r) => r.id === id);
+    setChangeRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedChange(null);
+    addToast({ type: "success", message: `Change request for ${req?.customer ?? "customer"} approved.` });
+  };
+
+  const handleRejectChange = (id: string) => {
+    const req = changeRequests.find((r) => r.id === id);
+    setChangeRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedChange(null);
+    addToast({ type: "warning", message: `Change request for ${req?.customer ?? "customer"} rejected.` });
+  };
+
   return (
     <Box>
       <PageHeader
@@ -42,11 +85,15 @@ export default function ActivityPage() {
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Activity" }]}
       />
 
-      {/* Flagged Activities */}
       <Box sx={{ mb: 3 }}>
-        <SectionCard title="Flagged Fueling Activities" subtitle="Anomalies detected by the system" action={
-          <Chip label={`${flaggedActivities.length} flags`} size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171", fontWeight: 600 }} />
-        } noPadding>
+        <SectionCard
+          title="Flagged Fueling Activities"
+          subtitle="Anomalies detected by the system"
+          action={
+            <Chip label={`${flaggedActivities.length} flags`} size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171", fontWeight: 600 }} />
+          }
+          noPadding
+        >
           <Table>
             <TableHead>
               <TableRow>
@@ -75,10 +122,22 @@ export default function ActivityPage() {
                     <TableCell sx={{ maxWidth: 240 }}>
                       <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{flag.details}</Typography>
                     </TableCell>
-                    <TableCell><Chip label={flag.severity} size="small" sx={{ backgroundColor: sc.bg, color: sc.color, fontWeight: 600, textTransform: "capitalize" }} /></TableCell>
-                    <TableCell><Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{formatDateTime(flag.time)}</Typography></TableCell>
+                    <TableCell>
+                      <Chip label={flag.severity} size="small" sx={{ backgroundColor: sc.bg, color: sc.color, fontWeight: 600, textTransform: "capitalize" }} />
+                    </TableCell>
+                    <TableCell>
+                      <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{formatDateTime(flag.time)}</Typography>
+                    </TableCell>
                     <TableCell align="right">
-                      <Button size="small" variant="outlined" sx={{ fontSize: "0.7rem" }}>Review</Button>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<VisibilityIcon sx={{ fontSize: "14px !important" }} />}
+                        sx={{ fontSize: "0.7rem" }}
+                        onClick={() => setSelectedFlag(flag)}
+                      >
+                        Preview
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -89,57 +148,103 @@ export default function ActivityPage() {
       </Box>
 
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2.5, "@media (max-width: 900px)": { gridTemplateColumns: "1fr" } }}>
-        {/* New Customer Requests */}
         <SectionCard
           title="New Customer Registration Requests"
           subtitle={`${registrationRequests.length} pending`}
           action={<PersonAddIcon sx={{ color: "#9ca3af" }} />}
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-            {registrationRequests.map((req) => (
-              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(255,255,255,0.07)" }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
+            {registrationRequests.length === 0 ? (
+              <Typography sx={{ fontSize: "0.8rem", color: "#64748b", textAlign: "center", py: 2 }}>No pending requests</Typography>
+            ) : (
+              registrationRequests.map((req) => (
+                <Box
+                  key={req.id}
+                  sx={{
+                    p: 2,
+                    borderRadius: "10px",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <Box>
                     <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{req.name}</Typography>
                     <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>{req.email}</Typography>
+                    <Typography sx={{ fontSize: "0.7rem", color: "#9ca3af", mt: 0.5 }}>{formatDateTime(req.submittedAt)}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: "0.7rem", color: "#9ca3af" }}>{formatDateTime(req.submittedAt)}</Typography>
+                  <Tooltip title="View details">
+                    <IconButton size="small" onClick={() => setSelectedRegistration(req)} sx={{ color: "#60a5fa" }}>
+                      <VisibilityIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button size="small" variant="outlined" startIcon={<CheckIcon />} sx={{ fontSize: "0.7rem", borderColor: "#22c55e", color: "#22c55e" }}>Approve</Button>
-                  <Button size="small" variant="outlined" startIcon={<CloseIcon />} sx={{ fontSize: "0.7rem", borderColor: "#ef4444", color: "#ef4444" }}>Reject</Button>
-                </Box>
-              </Box>
-            ))}
+              ))
+            )}
           </Box>
         </SectionCard>
 
-        {/* Change Requests */}
         <SectionCard
           title="Location & Photo Change Requests"
           subtitle={`${changeRequests.length} pending`}
           action={<EditLocationIcon sx={{ color: "#9ca3af" }} />}
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-            {changeRequests.map((req) => (
-              <Box key={req.id} sx={{ p: 2, borderRadius: "10px", border: "1px solid rgba(255,255,255,0.07)" }}>
-                <Box sx={{ mb: 1 }}>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{req.customer}</Typography>
-                    <Chip label={req.type} size="small" sx={{ fontSize: "0.65rem", backgroundColor: "rgba(59,130,246,0.15)", color: "#60a5fa" }} />
+            {changeRequests.length === 0 ? (
+              <Typography sx={{ fontSize: "0.8rem", color: "#64748b", textAlign: "center", py: 2 }}>No pending requests</Typography>
+            ) : (
+              changeRequests.map((req) => (
+                <Box
+                  key={req.id}
+                  sx={{
+                    p: 2,
+                    borderRadius: "10px",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5, gap: 1 }}>
+                      <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>{req.customer}</Typography>
+                      <Chip label={req.type} size="small" sx={{ fontSize: "0.65rem", backgroundColor: "rgba(59,130,246,0.15)", color: "#60a5fa", flexShrink: 0 }} />
+                    </Box>
+                    <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>Current: {req.current}</Typography>
+                    <Typography sx={{ fontSize: "0.75rem", color: "#f1f5f9" }}>Requested: {req.requested}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>Current: {req.current}</Typography>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#f1f5f9" }}>Requested: {req.requested}</Typography>
+                  <Tooltip title="Preview details">
+                    <IconButton size="small" onClick={() => setSelectedChange(req)} sx={{ color: "#60a5fa", ml: 1 }}>
+                      <VisibilityIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button size="small" variant="outlined" startIcon={<CheckIcon />} sx={{ fontSize: "0.7rem", borderColor: "#22c55e", color: "#22c55e" }}>Approve</Button>
-                  <Button size="small" variant="outlined" startIcon={<CloseIcon />} sx={{ fontSize: "0.7rem", borderColor: "#ef4444", color: "#ef4444" }}>Reject</Button>
-                </Box>
-              </Box>
-            ))}
+              ))
+            )}
           </Box>
         </SectionCard>
       </Box>
+
+      <FlaggedActivityModal
+        open={!!selectedFlag}
+        activity={selectedFlag}
+        onClose={() => setSelectedFlag(null)}
+      />
+      <CustomerRegistrationModal
+        open={!!selectedRegistration}
+        request={selectedRegistration}
+        onClose={() => setSelectedRegistration(null)}
+        onApprove={handleApproveRegistration}
+        onReject={handleRejectRegistration}
+      />
+      <ChangeRequestModal
+        open={!!selectedChange}
+        request={selectedChange}
+        onClose={() => setSelectedChange(null)}
+        onApprove={handleApproveChange}
+        onReject={handleRejectChange}
+      />
     </Box>
   );
 }

@@ -1,70 +1,90 @@
 "use client";
 
-import { Box, Grid, Typography, Button, Table, TableBody, TableCell, TableHead, TableRow, Chip, Paper } from "@mui/material";
+import { useState } from "react";
+import {
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Chip,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import PrintIcon from "@mui/icons-material/Print";
 import AddIcon from "@mui/icons-material/Add";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
+import QRCodeCard from "@/components/qr-codes/QRCodeCard";
+import PendingRequestModal from "@/components/qr-codes/PendingRequestModal";
+import UnderDevelopmentModal, { type DevFeatureKey } from "@/components/ui/UnderDevelopmentModal";
+import BulkGenerateModal, { generateUnassignedQrCodes, type BulkGenerateData } from "@/components/qr-codes/BulkGenerateModal";
+import {
+  mockPendingRequests,
+  mockRegisteredCodes,
+  type PendingQrRequest,
+  type RegisteredQrCode,
+} from "./_data";
 import { formatDateTime } from "@/lib/utils/formatters";
-
-const pendingRequests = [
-  { id: "qr1", customerId: "cu1", customerName: "Austin Construction LLC", equipmentName: "Compactor #3", status: "Pending", submittedAt: "2024-11-08T10:00:00Z" },
-  { id: "qr2", customerId: "cu4", customerName: "Zenith Logistics Corp", equipmentName: "Fleet Truck #201", status: "Pending", submittedAt: "2024-11-08T09:00:00Z" },
-];
-
-const registeredCodes = [
-  { code: "QR-0001", customer: "Austin Construction LLC", equipment: "Excavator CAT 320", fuelType: "Diesel" },
-  { code: "QR-0002", customer: "Austin Construction LLC", equipment: "Bulldozer D6", fuelType: "Diesel" },
-  { code: "QR-0010", customer: "Capitol Fleet Services", equipment: "Fleet Van #001", fuelType: "Regular" },
-  { code: "QR-0011", customer: "Capitol Fleet Services", equipment: "Fleet Van #002", fuelType: "Regular" },
-  { code: "QR-0012", customer: "Capitol Fleet Services", equipment: "Fleet Truck #101", fuelType: "Diesel" },
-  { code: "QR-0020", customer: "Lone Star Agriculture", equipment: "John Deere 8R 410", fuelType: "Diesel" },
-  { code: "QR-0021", customer: "Lone Star Agriculture", equipment: "Case IH Harvester", fuelType: "Diesel" },
-  { code: "QR-0030", customer: "TXPower Generation", equipment: "Generator G500", fuelType: "Diesel" },
-];
-
-function QRCodeBadge({ code }: { code: string }) {
-  return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 2,
-        borderRadius: "12px",
-        border: "1px solid rgba(255,255,255,0.08)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 1,
-        cursor: "pointer",
-        transition: "all 150ms",
-        "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.1)" },
-      }}
-    >
-      <Box
-        sx={{
-          width: 80,
-          height: 80,
-          borderRadius: "8px",
-          backgroundColor: "#252528",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "2px solid #e5e7eb",
-        }}
-      >
-        <QrCodeIcon sx={{ fontSize: 48, color: "#f1f5f9" }} />
-      </Box>
-      <Typography sx={{ fontSize: "0.7rem", fontFamily: "monospace", fontWeight: 700, color: "#f1f5f9" }}>
-        {code}
-      </Typography>
-    </Paper>
-  );
-}
+import { useUIStore } from "@/store/uiStore";
 
 export default function QRCodesPage() {
+  const { addToast } = useUIStore();
+  const [pendingRequests, setPendingRequests] = useState<PendingQrRequest[]>(mockPendingRequests);
+  const [registeredCodes, setRegisteredCodes] = useState<RegisteredQrCode[]>(mockRegisteredCodes);
+  const [selectedCodes, setSelectedCodes] = useState<string[]>([]);
+  const [selectedRequest, setSelectedRequest] = useState<PendingQrRequest | null>(null);
+  const [devModal, setDevModal] = useState<DevFeatureKey | null>(null);
+  const [bulkOpen, setBulkOpen] = useState(false);
+
+  const toggleSelect = (code: string) => {
+    setSelectedCodes((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]
+    );
+  };
+
+  const handleApprove = (id: string) => {
+    const req = pendingRequests.find((r) => r.id === id);
+    if (!req) return;
+
+    const newCode: RegisteredQrCode = {
+      code: `QR-${String(registeredCodes.length + 1).padStart(4, "0")}`,
+      assignmentStatus: "assigned",
+      customer: req.customerName,
+      equipment: req.equipmentName,
+      fuelType: req.fuelType,
+    };
+
+    setRegisteredCodes((prev) => [...prev, newCode]);
+    setPendingRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedRequest(null);
+    addToast({ type: "success", message: `QR code approved for ${req.equipmentName}.` });
+  };
+
+  const handleReject = (id: string) => {
+    const req = pendingRequests.find((r) => r.id === id);
+    setPendingRequests((prev) => prev.filter((r) => r.id !== id));
+    setSelectedRequest(null);
+    addToast({ type: "warning", message: `Registration request for ${req?.equipmentName ?? "equipment"} rejected.` });
+  };
+
+  const handleBulkGenerate = (data: BulkGenerateData) => {
+    const newCodes = generateUnassignedQrCodes(data.quantity, registeredCodes);
+    setRegisteredCodes((prev) => [...prev, ...newCodes]);
+    addToast({
+      type: "success",
+      message: `${newCodes.length} unassigned QR code(s) generated — ready to print and install.`,
+    });
+  };
+
+  const unassignedCount = registeredCodes.filter((c) => c.assignmentStatus === "unassigned").length;
+
   return (
     <Box>
       <PageHeader
@@ -73,13 +93,16 @@ export default function QRCodesPage() {
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "QR Codes" }]}
         action={
           <Box sx={{ display: "flex", gap: 1.5 }}>
-            <Button variant="outlined" startIcon={<PrintIcon />}>Print Selected</Button>
-            <Button variant="contained" startIcon={<AddIcon />}>Register Equipment</Button>
+            <Button variant="outlined" startIcon={<PrintIcon />} onClick={() => setDevModal("print")}>
+              Print Selected{selectedCodes.length > 0 ? ` (${selectedCodes.length})` : ""}
+            </Button>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDevModal("register")}>
+              Register Equipment
+            </Button>
           </Box>
         }
       />
 
-      {/* Pending Registration Requests */}
       {pendingRequests.length > 0 && (
         <Box sx={{ mb: 3 }}>
           <SectionCard
@@ -111,14 +134,11 @@ export default function QRCodesPage() {
                       <Chip label="Pending" size="small" sx={{ backgroundColor: "rgba(245,158,11,0.15)", color: "#fbbf24", fontWeight: 600 }} />
                     </TableCell>
                     <TableCell align="right">
-                      <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
-                        <Button size="small" variant="outlined" startIcon={<CheckIcon />} sx={{ borderColor: "#22c55e", color: "#22c55e", fontSize: "0.75rem" }}>
-                          Approve
-                        </Button>
-                        <Button size="small" variant="outlined" startIcon={<CloseIcon />} sx={{ borderColor: "#ef4444", color: "#ef4444", fontSize: "0.75rem" }}>
-                          Reject
-                        </Button>
-                      </Box>
+                      <Tooltip title="View details">
+                        <IconButton size="small" onClick={() => setSelectedRequest(req)} sx={{ color: "#60a5fa" }}>
+                          <VisibilityIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -128,16 +148,34 @@ export default function QRCodesPage() {
         </Box>
       )}
 
-      {/* Registered QR Codes */}
       <SectionCard
         title="Registered QR Codes"
-        subtitle={`${registeredCodes.length} codes registered`}
-        action={<Button size="small" startIcon={<PrintIcon />} variant="outlined" sx={{ fontSize: "0.75rem" }}>Print All</Button>}
+        subtitle={`${registeredCodes.length} codes total${unassignedCount > 0 ? ` · ${unassignedCount} unassigned (awaiting customer scan)` : ""}`}
+        action={
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Button size="small" startIcon={<QrCodeIcon />} variant="outlined" sx={{ fontSize: "0.75rem" }} onClick={() => setBulkOpen(true)}>
+              Bulk Generate
+            </Button>
+            <Button size="small" startIcon={<PrintIcon />} variant="outlined" sx={{ fontSize: "0.75rem" }} onClick={() => setDevModal("print")}>
+              Print All
+            </Button>
+          </Box>
+        }
       >
+        <Typography sx={{ fontSize: "0.75rem", color: "#64748b", mb: 2 }}>
+          Unassigned codes are printed and installed on equipment — customer scan auto-links them here for approval
+        </Typography>
         <Grid container spacing={2} sx={{ mb: 3 }}>
           {registeredCodes.map((item) => (
             <Grid item xs={6} sm={4} md={3} lg={2} key={item.code}>
-              <QRCodeBadge code={item.code} />
+              <QRCodeCard
+                code={item.code}
+                label={item.equipment ?? undefined}
+                unassigned={item.assignmentStatus === "unassigned"}
+                selectable
+                selected={selectedCodes.includes(item.code)}
+                onSelect={toggleSelect}
+              />
             </Grid>
           ))}
         </Grid>
@@ -145,6 +183,7 @@ export default function QRCodesPage() {
           <TableHead>
             <TableRow>
               <TableCell>Code</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Customer</TableCell>
               <TableCell>Equipment</TableCell>
               <TableCell>Fuel Type</TableCell>
@@ -154,16 +193,49 @@ export default function QRCodesPage() {
             {registeredCodes.map((item) => (
               <TableRow key={item.code} hover>
                 <TableCell><Typography sx={{ fontFamily: "monospace", fontWeight: 700, fontSize: "0.8rem" }}>{item.code}</Typography></TableCell>
-                <TableCell>{item.customer}</TableCell>
-                <TableCell>{item.equipment}</TableCell>
                 <TableCell>
-                  <Chip label={item.fuelType} size="small" sx={{ fontSize: "0.7rem" }} />
+                  <Chip
+                    label={item.assignmentStatus === "unassigned" ? "Unassigned" : "Assigned"}
+                    size="small"
+                    sx={{
+                      fontSize: "0.65rem",
+                      backgroundColor: item.assignmentStatus === "unassigned" ? "rgba(245,158,11,0.15)" : "rgba(34,197,94,0.15)",
+                      color: item.assignmentStatus === "unassigned" ? "#fbbf24" : "#4ade80",
+                    }}
+                  />
+                </TableCell>
+                <TableCell>{item.customer ?? "—"}</TableCell>
+                <TableCell>{item.equipment ?? "—"}</TableCell>
+                <TableCell>
+                  {item.fuelType ? (
+                    <Chip label={item.fuelType} size="small" sx={{ fontSize: "0.7rem" }} />
+                  ) : (
+                    <Typography sx={{ fontSize: "0.75rem", color: "#64748b" }}>—</Typography>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </SectionCard>
+
+      <PendingRequestModal
+        open={!!selectedRequest}
+        request={selectedRequest}
+        onClose={() => setSelectedRequest(null)}
+        onApprove={handleApprove}
+        onReject={handleReject}
+      />
+      <UnderDevelopmentModal
+        open={devModal !== null}
+        onClose={() => setDevModal(null)}
+        featureKey={devModal ?? "print"}
+      />
+      <BulkGenerateModal
+        open={bulkOpen}
+        onClose={() => setBulkOpen(false)}
+        onSubmit={handleBulkGenerate}
+      />
     </Box>
   );
 }

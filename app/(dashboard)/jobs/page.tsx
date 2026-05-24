@@ -1,17 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Typography, Button, Chip, Avatar, IconButton, Tooltip } from "@mui/material";
+import { Box, Typography, Button, Chip, Avatar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
-import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PageHeader from "@/components/ui/PageHeader";
-import StatusChip from "@/components/ui/StatusChip";
+import JobTicketModal, { type JobTicketUpdateData } from "@/components/jobs/JobTicketModal";
+import NewTicketModal, { type NewTicketData } from "@/components/jobs/NewTicketModal";
 import type { JobTicket, JobStatus } from "@/types/job";
 import { mockJobs } from "./_data";
+import { mockDrivers } from "../drivers/_data";
+import { mockTrucks } from "../trucks/_data";
 import { formatDate } from "@/lib/utils/formatters";
+import { useUIStore } from "@/store/uiStore";
 
 const LANES: { status: JobStatus; label: string; color: string; bg: string }[] = [
   { status: "New", label: "New Tickets", color: "#a78bfa", bg: "rgba(139,92,246,0.2)" },
@@ -28,9 +30,10 @@ const FUEL_COLORS: Record<string, string> = {
   DEF: "#22c55e",
 };
 
-function TicketCard({ ticket }: { ticket: JobTicket }) {
+function TicketCard({ ticket, onClick }: { ticket: JobTicket; onClick: () => void }) {
   return (
     <Box
+      onClick={onClick}
       sx={{
         background: "#252528",
         borderRadius: "12px",
@@ -101,10 +104,70 @@ function TicketCard({ ticket }: { ticket: JobTicket }) {
 }
 
 export default function JobsPage() {
+  const { addToast } = useUIStore();
   const [jobs, setJobs] = useState<JobTicket[]>(mockJobs);
+  const [selectedTicket, setSelectedTicket] = useState<JobTicket | null>(null);
+  const [newTicketOpen, setNewTicketOpen] = useState(false);
 
   const getByStatus = (status: JobStatus) =>
     jobs.filter((j) => j.status === status);
+
+  const handleUpdateTicket = (ticketId: string, data: JobTicketUpdateData) => {
+    const driver = data.assignedDriverId ? mockDrivers.find((d) => d.id === data.assignedDriverId) : undefined;
+    const truck = data.assignedTruckId ? mockTrucks.find((t) => t.id === data.assignedTruckId) : undefined;
+    const unassigning = data.status === "Ready";
+
+    setJobs((prev) =>
+      prev.map((job) =>
+        job.id === ticketId
+          ? {
+              ...job,
+              status: data.status,
+              assignedDriverId: unassigning ? undefined : driver?.id,
+              assignedDriverName: unassigning ? undefined : driver?.name,
+              assignedTruckId: unassigning ? undefined : truck?.id,
+              assignedTruckPlate: unassigning ? undefined : truck?.plateNumber,
+              deliveredGallons: data.deliveredGallons ?? job.deliveredGallons,
+              notes: data.notes ?? job.notes,
+              updatedAt: new Date().toISOString(),
+              ...(data.status === "Ready" && !job.dailyFuelPrice ? { dailyFuelPrice: 3.459 } : {}),
+            }
+          : job
+      )
+    );
+
+    setSelectedTicket(null);
+    const message =
+      data.status === "Ready" && jobs.find((j) => j.id === ticketId)?.status === "Assigned"
+        ? "Ticket unassigned and moved to Ready."
+        : `Ticket moved to ${data.status}.`;
+    addToast({ type: "success", message });
+  };
+
+  const handleCreateTicket = (data: NewTicketData) => {
+    const ticketNumber = `WF-2024-${String(840 + jobs.length + 1).padStart(4, "0")}`;
+    const newTicket: JobTicket = {
+      id: `j-${Date.now()}`,
+      ticketNumber,
+      customerId: data.customerId,
+      customerName: data.customerName,
+      equipmentId: data.equipmentId,
+      equipmentName: data.equipmentName,
+      fuelType: data.fuelType,
+      requestedGallons: data.requestedGallons,
+      scheduledDate: data.scheduledDate,
+      scheduledTime: data.scheduledTime,
+      status: "New",
+      isRecurring: data.isRecurring,
+      notes: data.notes || undefined,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    setJobs((prev) => [newTicket, ...prev]);
+    setNewTicketOpen(false);
+    addToast({ type: "success", message: `Ticket ${ticketNumber} created.` });
+  };
 
   return (
     <Box>
@@ -113,7 +176,7 @@ export default function JobsPage() {
         subtitle="Kanban board for fueling tickets"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Jobs" }]}
         action={
-          <Button variant="contained" startIcon={<AddIcon />}>
+          <Button variant="contained" startIcon={<AddIcon />} onClick={() => setNewTicketOpen(true)}>
             New Ticket
           </Button>
         }
@@ -145,7 +208,6 @@ export default function JobsPage() {
                 overflow: "hidden",
               }}
             >
-              {/* Lane header */}
               <Box
                 sx={{
                   p: 2,
@@ -169,20 +231,37 @@ export default function JobsPage() {
                 />
               </Box>
 
-              {/* Cards */}
               <Box sx={{ p: 1.5, flex: 1, display: "flex", flexDirection: "column", gap: 1.5, overflowY: "auto" }}>
                 {laneJobs.length === 0 ? (
                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1, opacity: 0.35 }}>
                     <Typography sx={{ fontSize: "0.8rem", color: "#9ca3af" }}>No tickets</Typography>
                   </Box>
                 ) : (
-                  laneJobs.map((job) => <TicketCard key={job.id} ticket={job} />)
+                  laneJobs.map((job) => (
+                    <TicketCard
+                      key={job.id}
+                      ticket={job}
+                      onClick={() => setSelectedTicket(job)}
+                    />
+                  ))
                 )}
               </Box>
             </Box>
           );
         })}
       </Box>
+
+      <JobTicketModal
+        open={!!selectedTicket}
+        ticket={selectedTicket}
+        onClose={() => setSelectedTicket(null)}
+        onSubmit={handleUpdateTicket}
+      />
+      <NewTicketModal
+        open={newTicketOpen}
+        onClose={() => setNewTicketOpen(false)}
+        onSubmit={handleCreateTicket}
+      />
     </Box>
   );
 }

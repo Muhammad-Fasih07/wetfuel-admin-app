@@ -19,12 +19,12 @@ import PageHeader from "@/components/ui/PageHeader";
 import { formatDateTime } from "@/lib/utils/formatters";
 
 const STATS = [
-  { title: "Total Drivers", value: 5, subtitle: "3 active", icon: <PeopleIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(59,130,246,0.2)", iconColor: "#60a5fa", trend: 5, trendLabel: "vs last month" },
-  { title: "Total Trucks", value: 4, subtitle: "3 operational", icon: <DirectionsBusIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(139,92,246,0.2)", iconColor: "#a78bfa", trend: 0 },
-  { title: "Customers", value: 5, subtitle: "4 active", icon: <BusinessIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(34,197,94,0.2)", iconColor: "#4ade80", trend: 12, trendLabel: "vs last month" },
-  { title: "Open Jobs", value: 4, subtitle: "2 scheduled today", icon: <AssignmentIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(245,158,11,0.2)", iconColor: "#fbbf24", trend: -8, trendLabel: "vs yesterday" },
-  { title: "Pending Invoices", value: 2, subtitle: "$18,040.25 total", icon: <ReceiptIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(239,68,68,0.2)", iconColor: "#f87171" },
-  { title: "Low Inventory", value: 1, subtitle: "Premium < 35%", icon: <WarningAmberIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(245,158,11,0.2)", iconColor: "#fbbf24" },
+  { title: "Total Drivers", value: 5, subtitle: "3 active", href: "/drivers", icon: <PeopleIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(59,130,246,0.2)", iconColor: "#60a5fa", trend: 5, trendLabel: "vs last month" },
+  { title: "Total Trucks", value: 4, subtitle: "3 operational", href: "/trucks", icon: <DirectionsBusIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(139,92,246,0.2)", iconColor: "#a78bfa", trend: 0 },
+  { title: "Customers", value: 5, subtitle: "4 active", href: "/customers", icon: <BusinessIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(34,197,94,0.2)", iconColor: "#4ade80", trend: 12, trendLabel: "vs last month" },
+  { title: "Open Jobs", value: 4, subtitle: "2 scheduled today", href: "/jobs", icon: <AssignmentIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(245,158,11,0.2)", iconColor: "#fbbf24", trend: -8, trendLabel: "vs yesterday" },
+  { title: "Pending Invoices", value: 2, subtitle: "$18,040.25 total", href: "/invoices", icon: <ReceiptIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(239,68,68,0.2)", iconColor: "#f87171" },
+  { title: "Low Inventory", value: 1, subtitle: "Premium < 35%", href: "/inventory", icon: <WarningAmberIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(245,158,11,0.2)", iconColor: "#fbbf24" },
 ];
 
 const ACTIVITY = [

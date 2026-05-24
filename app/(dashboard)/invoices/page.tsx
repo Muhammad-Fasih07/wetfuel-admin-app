@@ -6,6 +6,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import SearchIcon from "@mui/icons-material/Search";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
+import UnderDevelopmentModal, { type DevFeatureKey } from "@/components/ui/UnderDevelopmentModal";
 import { formatDate, formatCurrency } from "@/lib/utils/formatters";
 
 const mockInvoices = [
@@ -29,6 +30,7 @@ const STATUSES = ["All", "Draft", "Outstanding", "Paid", "Overdue"];
 export default function InvoicesPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [devModal, setDevModal] = useState<DevFeatureKey | null>(null);
 
   const filtered = mockInvoices.filter((inv) => {
     const matchSearch = inv.invoiceNumber.toLowerCase().includes(search.toLowerCase()) ||
@@ -47,7 +49,11 @@ export default function InvoicesPage() {
         title="Invoices"
         subtitle={`${formatCurrency(totalOutstanding)} outstanding`}
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Invoices" }]}
-        action={<Button variant="contained" startIcon={<DownloadIcon />}>Export to QuickBooks</Button>}
+        action={
+          <Button variant="contained" startIcon={<DownloadIcon />} onClick={() => setDevModal("quickbooks")}>
+            Export to QuickBooks
+          </Button>
+        }
       />
 
       <SectionCard
@@ -102,7 +108,15 @@ export default function InvoicesPage() {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Button size="small" variant="outlined" startIcon={<DownloadIcon />} sx={{ fontSize: "0.7rem" }}>Export</Button>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      startIcon={<DownloadIcon />}
+                      sx={{ fontSize: "0.7rem" }}
+                      onClick={() => setDevModal("export-invoice")}
+                    >
+                      Export
+                    </Button>
                   </TableCell>
                 </TableRow>
               );
@@ -110,6 +124,12 @@ export default function InvoicesPage() {
           </TableBody>
         </Table>
       </SectionCard>
+
+      <UnderDevelopmentModal
+        open={devModal !== null}
+        onClose={() => setDevModal(null)}
+        featureKey={devModal ?? "quickbooks"}
+      />
     </Box>
   );
 }

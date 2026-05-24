@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Box, Grid, Typography, Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -14,6 +15,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionCard from "@/components/ui/SectionCard";
 import StatCard from "@/components/ui/StatCard";
+import UnderDevelopmentModal from "@/components/ui/UnderDevelopmentModal";
 import { mockChartData, mockDriverReports, mockCustomerReports } from "./_data";
 import { formatCurrency, formatNumber } from "@/lib/utils/formatters";
 
@@ -25,13 +27,19 @@ const STATS = [
 ];
 
 export default function ReportingPage() {
+  const [exportDevOpen, setExportDevOpen] = useState(false);
+
   return (
     <Box>
       <PageHeader
         title="Reporting"
         subtitle="Performance metrics and analytics"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reporting" }]}
-        action={<Button variant="contained" startIcon={<DownloadIcon />}>Export Report</Button>}
+        action={
+          <Button variant="contained" startIcon={<DownloadIcon />} onClick={() => setExportDevOpen(true)}>
+            Export Report
+          </Button>
+        }
       />
 
       <Grid container spacing={2.5} sx={{ mb: 3 }}>
@@ -83,7 +91,7 @@ export default function ReportingPage() {
       <Grid container spacing={2.5}>
         {/* Driver Reports */}
         <Grid item xs={12} md={6}>
-          <SectionCard title="Driver Performance" subtitle="October 2024" action={<Button size="small" startIcon={<DownloadIcon />} sx={{ fontSize: "0.75rem" }}>Export</Button>} noPadding>
+          <SectionCard title="Driver Performance" subtitle="October 2024" action={<Button size="small" startIcon={<DownloadIcon />} sx={{ fontSize: "0.75rem" }} onClick={() => setExportDevOpen(true)}>Export</Button>} noPadding>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -111,7 +119,7 @@ export default function ReportingPage() {
 
         {/* Customer Reports */}
         <Grid item xs={12} md={6}>
-          <SectionCard title="Customer Fueling" subtitle="October 2024" action={<Button size="small" startIcon={<DownloadIcon />} sx={{ fontSize: "0.75rem" }}>Export</Button>} noPadding>
+          <SectionCard title="Customer Fueling" subtitle="October 2024" action={<Button size="small" startIcon={<DownloadIcon />} sx={{ fontSize: "0.75rem" }} onClick={() => setExportDevOpen(true)}>Export</Button>} noPadding>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -137,6 +145,12 @@ export default function ReportingPage() {
           </SectionCard>
         </Grid>
       </Grid>
+
+      <UnderDevelopmentModal
+        open={exportDevOpen}
+        onClose={() => setExportDevOpen(false)}
+        featureKey="report-export"
+      />
     </Box>
   );
 }

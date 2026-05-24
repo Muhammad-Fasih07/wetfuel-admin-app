@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import Link from "next/link";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 
@@ -13,6 +14,7 @@ interface StatCardProps {
   iconColor: string;
   trend?: number;
   trendLabel?: string;
+  href?: string;
 }
 
 export default function StatCard({
@@ -24,24 +26,35 @@ export default function StatCard({
   iconColor,
   trend,
   trendLabel,
+  href,
 }: StatCardProps) {
   const isPositive = (trend ?? 0) >= 0;
 
-  return (
-    <Box
-      sx={{
-        background: "#1c1c1e",
-        borderRadius: "14px",
-        border: "1px solid rgba(255,255,255,0.07)",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-        p: 3,
-        display: "flex",
-        gap: 2,
-        alignItems: "flex-start",
-        transition: "box-shadow 250ms",
-        "&:hover": { boxShadow: "0 8px 32px rgba(0,0,0,0.4)" },
-      }}
-    >
+  const cardSx = {
+    background: "#1c1c1e",
+    borderRadius: "14px",
+    border: "1px solid rgba(255,255,255,0.07)",
+    boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+    p: 3,
+    display: "flex",
+    gap: 2,
+    alignItems: "flex-start",
+    transition: "box-shadow 250ms, transform 150ms",
+    ...(href && {
+      textDecoration: "none",
+      cursor: "pointer",
+      "&:hover": {
+        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+        transform: "translateY(-2px)",
+      },
+    }),
+    ...(!href && {
+      "&:hover": { boxShadow: "0 8px 32px rgba(0,0,0,0.4)" },
+    }),
+  };
+
+  const content = (
+    <>
       <Box
         sx={{
           width: 48,
@@ -111,6 +124,16 @@ export default function StatCard({
           </Box>
         )}
       </Box>
-    </Box>
+    </>
   );
+
+  if (href) {
+    return (
+      <Box component={Link} href={href} sx={cardSx}>
+        {content}
+      </Box>
+    );
+  }
+
+  return <Box sx={cardSx}>{content}</Box>;
 }

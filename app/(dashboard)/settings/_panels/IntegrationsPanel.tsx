@@ -3,11 +3,11 @@
 import { Box, Typography, Button, TextField, Chip, Divider, Alert } from "@mui/material";
 import { useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import LinkOffIcon from "@mui/icons-material/LinkOff";
+import UnderDevelopmentModal, { type DevFeatureKey } from "@/components/ui/UnderDevelopmentModal";
 
 export default function IntegrationsPanel() {
-  const [qbConnected, setQbConnected] = useState(false);
-  const [opisRate, setOpisRate] = useState({ regular: "3.459", premium: "3.829", diesel: "4.189" });
+  const [devModal, setDevModal] = useState<DevFeatureKey | null>(null);
+  const [opisRate] = useState({ regular: "3.459", premium: "3.829", diesel: "4.189" });
   const [override, setOverride] = useState({ regular: "", premium: "", diesel: "" });
 
   return (
@@ -20,20 +20,11 @@ export default function IntegrationsPanel() {
           <Box sx={{ flex: 1 }}>
             <Typography sx={{ fontWeight: 600, fontSize: "0.875rem" }}>QuickBooks Online</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
-              {qbConnected ? (
-                <Chip icon={<CheckCircleIcon sx={{ fontSize: "14px !important" }} />} label="Connected" size="small" sx={{ backgroundColor: "rgba(34,197,94,0.15)", color: "#4ade80", fontWeight: 600 }} />
-              ) : (
-                <Chip label="Not Connected" size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171" }} />
-              )}
+              <Chip label="Not Connected" size="small" sx={{ backgroundColor: "rgba(239,68,68,0.15)", color: "#f87171" }} />
             </Box>
           </Box>
-          <Button
-            variant={qbConnected ? "outlined" : "contained"}
-            startIcon={qbConnected ? <LinkOffIcon /> : undefined}
-            onClick={() => setQbConnected(!qbConnected)}
-            sx={qbConnected ? { borderColor: "#ef4444", color: "#ef4444" } : {}}
-          >
-            {qbConnected ? "Disconnect" : "Connect QuickBooks"}
+          <Button variant="contained" onClick={() => setDevModal("connect-quickbooks")}>
+            Connect QuickBooks
           </Button>
         </Box>
       </Box>
@@ -75,10 +66,16 @@ export default function IntegrationsPanel() {
           ))}
         </Box>
         <Box sx={{ mt: 2.5, display: "flex", gap: 2 }}>
-          <Button variant="contained">Apply Prices</Button>
-          <Button variant="outlined">Reset to OPIS</Button>
+          <Button variant="contained" onClick={() => setDevModal("apply-prices")}>Apply Prices</Button>
+          <Button variant="outlined" onClick={() => setDevModal("reset-opis")}>Reset to OPIS</Button>
         </Box>
       </Box>
+
+      <UnderDevelopmentModal
+        open={devModal !== null}
+        onClose={() => setDevModal(null)}
+        featureKey={devModal ?? "connect-quickbooks"}
+      />
     </Box>
   );
 }

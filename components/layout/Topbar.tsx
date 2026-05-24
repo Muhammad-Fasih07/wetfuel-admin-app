@@ -21,10 +21,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { getInitials } from "@/lib/utils/formatters";
+import UnderDevelopmentModal from "@/components/ui/UnderDevelopmentModal";
 
 export default function Topbar() {
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   const handleOpenMenu = (e: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(e.currentTarget);
@@ -88,7 +90,7 @@ export default function Topbar() {
 
       <Box sx={{ flex: 1 }} />
 
-      <IconButton size="medium">
+      <IconButton size="medium" onClick={() => setNotificationsOpen(true)}>
         <Badge badgeContent={4} color="error">
           <NotificationsIcon sx={{ fontSize: 22, color: "#64748b" }} />
         </Badge>
@@ -163,6 +165,12 @@ export default function Topbar() {
           <Typography sx={{ fontSize: "0.875rem" }}>Sign Out</Typography>
         </MenuItem>
       </Menu>
+
+      <UnderDevelopmentModal
+        open={notificationsOpen}
+        onClose={() => setNotificationsOpen(false)}
+        featureKey="notifications"
+      />
     </Box>
   );
 }
