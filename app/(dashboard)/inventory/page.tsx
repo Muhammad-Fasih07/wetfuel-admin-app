@@ -77,7 +77,7 @@ export default function InventoryPage() {
   const [addItemOpen, setAddItemOpen] = useState(false);
   const [adjustOpen, setAdjustOpen] = useState(false);
 
-  const truckPlates = [...new Set(mockTruckFuelLevels.map((t) => t.truckPlate))];
+  const truckPlates = Array.from(new Set(mockTruckFuelLevels.map((t) => t.truckPlate)));
 
   const handleRecordPurchase = (data: RecordPurchaseData) => {
     const tank = tanks.find((t) => t.id === data.tankId);
