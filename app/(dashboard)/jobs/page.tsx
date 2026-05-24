@@ -11,9 +11,9 @@ import NewTicketModal, { type NewTicketData } from "@/components/jobs/NewTicketM
 import type { JobTicket, JobStatus } from "@/types/job";
 import { mockJobs } from "./_data";
 import { mockDrivers } from "../drivers/_data";
-import { mockTrucks } from "../trucks/_data";
 import { formatDate } from "@/lib/utils/formatters";
 import { useUIStore } from "@/store/uiStore";
+import { cardHoverBorderSx } from "@/lib/theme/cardStyles";
 
 const LANES: { status: JobStatus; label: string; color: string; bg: string }[] = [
   { status: "New", label: "New Tickets", color: "#a78bfa", bg: "rgba(139,92,246,0.2)" },
@@ -42,7 +42,12 @@ function TicketCard({ ticket, onClick }: { ticket: JobTicket; onClick: () => voi
         boxShadow: "0 1px 4px rgba(255,255,255,0.07)",
         cursor: "pointer",
         transition: "all 150ms",
-        "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.1)", transform: "translateY(-1px)" },
+        ...cardHoverBorderSx,
+        "&:hover": {
+          ...cardHoverBorderSx["&:hover"],
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          transform: "translateY(-1px)",
+        },
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1.5 }}>
@@ -114,31 +119,47 @@ export default function JobsPage() {
 
   const handleUpdateTicket = (ticketId: string, data: JobTicketUpdateData) => {
     const driver = data.assignedDriverId ? mockDrivers.find((d) => d.id === data.assignedDriverId) : undefined;
-    const truck = data.assignedTruckId ? mockTrucks.find((t) => t.id === data.assignedTruckId) : undefined;
-    const unassigning = data.status === "Ready";
+    const prev = jobs.find((j) => j.id === ticketId);
+    const unassigning = data.status === "Ready" && prev?.status === "Assigned";
 
-    setJobs((prev) =>
-      prev.map((job) =>
-        job.id === ticketId
-          ? {
-              ...job,
-              status: data.status,
-              assignedDriverId: unassigning ? undefined : driver?.id,
-              assignedDriverName: unassigning ? undefined : driver?.name,
-              assignedTruckId: unassigning ? undefined : truck?.id,
-              assignedTruckPlate: unassigning ? undefined : truck?.plateNumber,
-              deliveredGallons: data.deliveredGallons ?? job.deliveredGallons,
-              notes: data.notes ?? job.notes,
-              updatedAt: new Date().toISOString(),
-              ...(data.status === "Ready" && !job.dailyFuelPrice ? { dailyFuelPrice: 3.459 } : {}),
-            }
-          : job
-      )
+    setJobs((prevJobs) =>
+      prevJobs.map((job) => {
+        if (job.id !== ticketId) return job;
+
+        const next: JobTicket = {
+          ...job,
+          status: data.status,
+          deliveredGallons: data.deliveredGallons ?? job.deliveredGallons,
+          deliveryFee: data.deliveryFee ?? job.deliveryFee,
+          notes: data.notes ?? job.notes,
+          updatedAt: new Date().toISOString(),
+        };
+
+        if (unassigning) {
+          next.assignedDriverId = undefined;
+          next.assignedDriverName = undefined;
+          next.assignedTruckId = undefined;
+          next.assignedTruckPlate = undefined;
+        } else if (driver) {
+          next.assignedDriverId = driver.id;
+          next.assignedDriverName = driver.name;
+        }
+
+        if (data.status === "Ready" && !job.dailyFuelPrice) {
+          next.dailyFuelPrice = 3.459;
+        }
+
+        if (data.status === "Finalized" && data.deliveryFee && job.dailyFuelPrice && job.deliveredGallons) {
+          next.totalAmount = job.deliveredGallons * job.dailyFuelPrice + data.deliveryFee;
+        }
+
+        return next;
+      })
     );
 
     setSelectedTicket(null);
     const message =
-      data.status === "Ready" && jobs.find((j) => j.id === ticketId)?.status === "Assigned"
+      unassigning
         ? "Ticket unassigned and moved to Ready."
         : `Ticket moved to ${data.status}.`;
     addToast({ type: "success", message });

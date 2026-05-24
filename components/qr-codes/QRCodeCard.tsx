@@ -2,6 +2,7 @@
 
 import { Box, Typography, Paper, Checkbox } from "@mui/material";
 import QRCode from "react-qr-code";
+import { BRAND_RED, cardHoverBorderSx } from "@/lib/theme/cardStyles";
 
 interface QRCodeCardProps {
   code: string;
@@ -22,7 +23,7 @@ export default function QRCodeCard({ code, label, unassigned, selected, onSelect
       sx={{
         p: 2,
         borderRadius: "12px",
-        border: selected ? "2px solid #ce1c1a" : unassigned ? "1px dashed rgba(245,158,11,0.4)" : "1px solid rgba(255,255,255,0.08)",
+        border: selected ? `2px solid ${BRAND_RED}` : unassigned ? "1px dashed rgba(245,158,11,0.4)" : "1px solid rgba(255,255,255,0.08)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -30,7 +31,13 @@ export default function QRCodeCard({ code, label, unassigned, selected, onSelect
         cursor: selectable ? "pointer" : "default",
         transition: "all 150ms",
         backgroundColor: selected ? "rgba(206,28,26,0.08)" : "#252528",
-        "&:hover": selectable ? { boxShadow: "0 4px 16px rgba(0,0,0,0.25)" } : {},
+        "&:hover": selectable
+          ? {
+              ...cardHoverBorderSx["&:hover"],
+              boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
+              ...(selected ? {} : { border: `1px solid ${BRAND_RED}` }),
+            }
+          : {},
         position: "relative",
       }}
     >

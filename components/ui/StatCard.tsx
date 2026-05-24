@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import Link from "next/link";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import { cardHoverBorderSx } from "@/lib/theme/cardStyles";
 
 interface StatCardProps {
   title: string;
@@ -39,17 +40,22 @@ export default function StatCard({
     display: "flex",
     gap: 2,
     alignItems: "flex-start",
-    transition: "box-shadow 250ms, transform 150ms",
+    transition: "box-shadow 250ms, transform 150ms, border-color 150ms",
+    ...cardHoverBorderSx,
     ...(href && {
       textDecoration: "none",
       cursor: "pointer",
       "&:hover": {
+        ...cardHoverBorderSx["&:hover"],
         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
         transform: "translateY(-2px)",
       },
     }),
     ...(!href && {
-      "&:hover": { boxShadow: "0 8px 32px rgba(0,0,0,0.4)" },
+      "&:hover": {
+        ...cardHoverBorderSx["&:hover"],
+        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+      },
     }),
   };
 

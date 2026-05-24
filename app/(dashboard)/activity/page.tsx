@@ -33,6 +33,7 @@ import {
 } from "./_data";
 import { formatDateTime } from "@/lib/utils/formatters";
 import { useUIStore } from "@/store/uiStore";
+import { cardHoverBorderSx } from "@/lib/theme/cardStyles";
 
 const SEVERITY_COLORS: Record<string, { bg: string; color: string }> = {
   high: { bg: "rgba(239,68,68,0.15)", color: "#f87171" },
@@ -167,6 +168,7 @@ export default function ActivityPage() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    ...cardHoverBorderSx,
                   }}
                 >
                   <Box>
@@ -204,6 +206,7 @@ export default function ActivityPage() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
+                    ...cardHoverBorderSx,
                   }}
                 >
                   <Box sx={{ flex: 1, minWidth: 0 }}>

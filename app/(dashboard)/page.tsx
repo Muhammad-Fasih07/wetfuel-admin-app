@@ -17,6 +17,7 @@ import StatCard from "@/components/ui/StatCard";
 import SectionCard from "@/components/ui/SectionCard";
 import PageHeader from "@/components/ui/PageHeader";
 import { formatDateTime } from "@/lib/utils/formatters";
+import { cardHoverBorderSx } from "@/lib/theme/cardStyles";
 
 const STATS = [
   { title: "Total Drivers", value: 5, subtitle: "3 active", href: "/drivers", icon: <PeopleIcon sx={{ fontSize: 22 }} />, iconBg: "rgba(59,130,246,0.2)", iconColor: "#60a5fa", trend: 5, trendLabel: "vs last month" },
@@ -78,7 +79,12 @@ export default function DashboardPage() {
                     border: "1px solid rgba(255,255,255,0.07)",
                     textDecoration: "none",
                     transition: "all 150ms",
-                    "&:hover": { backgroundColor: "rgba(255,255,255,0.06)", transform: "translateX(2px)" },
+                    ...cardHoverBorderSx,
+                    "&:hover": {
+                      ...cardHoverBorderSx["&:hover"],
+                      backgroundColor: "rgba(255,255,255,0.06)",
+                      transform: "translateX(2px)",
+                    },
                   }}
                 >
                   <Box

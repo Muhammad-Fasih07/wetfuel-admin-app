@@ -12,6 +12,7 @@ import AddPackagedItemModal, { type AddPackagedItemData } from "@/components/inv
 import AdjustInventoryModal, { type ManualAdjustmentData, type SpillAdjustmentData } from "@/components/inventory/AdjustInventoryModal";
 import { mockMainTanks, mockTruckFuelLevels, mockPackagedGoods, mockTransferLogs } from "./_data";
 import { formatDateTime } from "@/lib/utils/formatters";
+import { cardHoverBorderSx } from "@/lib/theme/cardStyles";
 import { useUIStore } from "@/store/uiStore";
 import type { MainTank, TransferLog } from "@/types/inventory";
 
@@ -28,7 +29,7 @@ function TankCard({ tank }: { tank: MainTank }) {
   const isLow = pct < 30;
 
   return (
-    <Box sx={{ p: 2.5, borderRadius: "12px", border: "1px solid rgba(255,255,255,0.07)", background: "#252528" }}>
+    <Box sx={{ p: 2.5, borderRadius: "12px", border: "1px solid rgba(255,255,255,0.07)", background: "#252528", ...cardHoverBorderSx }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
         <Box>
           <Chip label={tank.fuelType} size="small" sx={{ backgroundColor: c.bg, color: c.text, fontWeight: 700, mb: 0.75 }} />
